@@ -43,20 +43,20 @@ def _copy_files_to_blddir(case):
 
     # copy source files into obj dir
     srcroot = case.get_value("SRCROOT")
-    glob_dirs = [os.path.join(srcroot, "E3SM/components/mpas-framework", "src", "framework"),
-                 os.path.join(srcroot, "E3SM/components/mpas-framework", "src", "operators"),
-                 os.path.join(srcroot, "E3SM/components/mpas-framework", "src", "tools", "registry"),
-                 os.path.join(srcroot, "E3SM/components/mpas-framework", "src", "external", "ezxml"),
-                 os.path.join(srcroot, "E3SM/components/mpas-framework", "src", "core_seaice", "shared"),
-                 os.path.join(srcroot, "E3SM/components/mpas-framework", "src", "core_seaice", "analysis_members"),
-                 os.path.join(srcroot, "E3SM/components/mpas-framework", "src", "core_seaice", "model_forward"),
-                 os.path.join(srcroot, "E3SM/components/mpas-framework", "src", "core_seaice"),
-                 os.path.join(srcroot, "E3SM/components/mpas-framework", "src", "core_seaice", "column"),
-                 os.path.join(srcroot, "E3SM/components/mpas-framework", "src", "core_seaice", "column", "constants", "cesm"),
-                 os.path.join(srcroot, "E3SM/components/mpas-framework", "src", "core_seaice", "driver")]
+    glob_dirs = [os.path.join(srcroot, "components/mpas-framework", "src", "framework"),
+                 os.path.join(srcroot, "components/mpas-framework", "src", "operators"),
+                 os.path.join(srcroot, "components/mpas-framework", "src", "tools", "registry"),
+                 os.path.join(srcroot, "components/mpas-framework", "src", "external", "ezxml"),
+                 os.path.join(srcroot, "components/mpas-framework", "src", "core_seaice", "shared"),
+                 os.path.join(srcroot, "components/mpas-framework", "src", "core_seaice", "analysis_members"),
+                 os.path.join(srcroot, "components/mpas-framework", "src", "core_seaice", "model_forward"),
+                 os.path.join(srcroot, "components/mpas-framework", "src", "core_seaice"),
+                 os.path.join(srcroot, "components/mpas-framework", "src", "core_seaice", "column"),
+                 os.path.join(srcroot, "components/mpas-framework", "src", "core_seaice", "column", "constants", "cesm"),
+                 os.path.join(srcroot, "components/mpas-framework", "src", "core_seaice", "driver")]
 
     if driver == 'nuopc':
-        glob_dirs.append(os.path.join(srcroot,"E3SM/components","mpas-seaice","driver_nuopc"))
+        glob_dirs.append(os.path.join(srcroot,"components","mpas-seaice","driver_nuopc"))
 
     dest_dir = os.path.join(objroot, "ice", "source")
     for glob_dir in glob_dirs:
@@ -76,7 +76,7 @@ def _copy_files_to_blddir(case):
         for filename in filenames:
             shutil.copy2(filename, dest_dir)
 
-    glob_dirs = [os.path.join(srcroot, "E3SM/components/mpas-seaice", "src", "analysis_members", "time_series_inc")]
+    glob_dirs = [os.path.join(srcroot, "components/mpas-seaice", "src", "analysis_members", "time_series_inc")]
     dest_dir = os.path.join(objroot, "ice", "obj", "time_series_inc")
     for glob_dir in glob_dirs:
         filenames = glob.glob(glob_dir + "/*.F")
@@ -87,14 +87,14 @@ def _copy_files_to_blddir(case):
             shutil.copy2(filename, dest_dir)
 
 
-    glob_dirs = [os.path.join(srcroot, "E3SM/components/mpas-seaice", "src")]
+    glob_dirs = [os.path.join(srcroot, "components/mpas-seaice", "src")]
     dest_dir = os.path.join(objroot, "ice")
     for glob_dir in glob_dirs:
         filenames = glob.glob(glob_dir + "/Registry.xml")
         for filename in filenames:
             shutil.copy2(filename, dest_dir)
 
-    glob_dirs = [os.path.join(srcroot, "E3SM/components/mpas-seaice", "src", "analysis_members")]
+    glob_dirs = [os.path.join(srcroot, "components/mpas-seaice", "src", "analysis_members")]
     dest_dir = os.path.join(objroot, "ice", "analysis_members")
     for glob_dir in glob_dirs:
         filenames = glob.glob(glob_dir + "/Regis*")
