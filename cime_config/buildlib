@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-CIME interface to build the mpaso component library
+CIME interface to build the mpassi component library
 """
 # pylint: disable=unused-wildcard-import, multiple-imports, wildcard-import
 # pylint: disable=wrong-import-position, too-many-locals, too-many-branches
@@ -102,19 +102,19 @@ def _copy_files_to_blddir(case):
             shutil.copy2(filename, dest_dir)
 
 ###############################################################################
-def _build_mpaso():
+def _build_mpassi():
 ###############################################################################
 
     caseroot, libroot, _ = parse_input(sys.argv)
 
     with Case(caseroot, read_only=False) as case:
         srcroot = case.get_value("SRCROOT")
-        # call mpaso's buildcpp to set the cppdefs
-        #cmd = os.path.join(os.path.join(srcroot, "components", "mpaso", "cime_config", "buildcpp"))
-        #logger.info("     ...calling mpaso buildcpp to set build time options")
+        # call mpassi's buildcpp to set the cppdefs
+        #cmd = os.path.join(os.path.join(srcroot, "components", "mpassi", "cime_config", "buildcpp"))
+        #logger.info("     ...calling mpassi buildcpp to set build time options")
         #try:
         #    mod = imp.load_source("buildcpp", cmd)
-        #    mpaso_cppdefs = mod.buildcpp(case)
+        #    mpassi_cppdefs = mod.buildcpp(case)
         #except:
         #    raise
 
@@ -169,7 +169,7 @@ def _build_mpaso():
         # build the library
         makefile = os.path.join(casetools, "Makefile")
         complib = os.path.join(libroot, "libice.a")
-        cmd = "{} complib -j {} MODEL=mpaso COMPLIB={} -f {} USER_CPPDEFS=\"-DUSE_PIO2 -D_MPI -DEXCLUDE_INIT_MODE -DMPAS_NO_ESMF_INIT -DMPAS_EXTERNAL_ESMF_LIB -DMPAS_NAMELIST_SUFFIX=seaice\" FIXEDFLAGS=-free {}" \
+        cmd = "{} complib -j {} MODEL=mpassi COMPLIB={} -f {} USER_CPPDEFS=\"-DUSE_PIO2 -D_MPI -DEXCLUDE_INIT_MODE -DMPAS_NO_ESMF_INIT -DMPAS_EXTERNAL_ESMF_LIB -DMPAS_NAMELIST_SUFFIX=seaice\" FIXEDFLAGS=-free {}" \
             .format(gmake, gmake_j, complib, makefile, get_standard_makefile_args(case))
 
         rc, out, err = run_cmd(cmd, from_dir=os.path.join(objroot, "ice", "obj"))
@@ -187,4 +187,4 @@ def _build_mpaso():
 ###############################################################################
 
 if __name__ == "__main__":
-    _build_mpaso()
+    _build_mpassi()
