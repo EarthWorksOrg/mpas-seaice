@@ -463,7 +463,7 @@ contains
     call shr_mpi_max(max_med2mod_areacor, max_med2mod_areacor_glob, lmpicom)
     call shr_mpi_min(min_med2mod_areacor, min_med2mod_areacor_glob, lmpicom)
 
-    if (my_task == mastertask) then
+    if (mastertask) then
        write(stdout,'(2A,2g23.15,A )') trim(subname),' :  min_mod2med_areacor, max_mod2med_areacor ',&
             min_mod2med_areacor_glob, max_mod2med_areacor_glob, 'MPASSI'
        write(stdout,'(2A,2g23.15,A )') trim(subname),' :  min_med2mod_areacor, max_med2mod_areacor ',&
