@@ -112,8 +112,12 @@ def _build_mpassi():
         compiler = case.get_value("COMPILER")
         if compiler == 'intel':
             fixedflags =  '-free'
+        elif compiler == 'intel-oneapi':
+            fixedflags =  '-free'
         elif compiler == 'gnu':
             fixedflags =  '-ffree-form'
+        elif compiler == 'nvhpc':
+            fixedflags =  '-Mfree'
         else:
             fixedflags = ''
         # call mpassi's buildcpp to set the cppdefs
