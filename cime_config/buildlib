@@ -111,7 +111,7 @@ def _build_mpassi():
         srcroot = case.get_value("SRCROOT")
         compiler = case.get_value("COMPILER")
         if compiler == 'intel':
-            fixedflags =  '-free'
+            fixedflags =  '"-UCPRINTEL -free"'
         elif compiler == 'intel-oneapi':
             fixedflags =  '-free'
         elif compiler == 'gnu':
