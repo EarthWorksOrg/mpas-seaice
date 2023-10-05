@@ -431,9 +431,7 @@ def buildnml(case, caseroot, compname):
         lines.append('                  type="none"')
         if ice_grid.startswith("oRRS1"):
             lines.append('                  io_type="pnetcdf,cdf5"')
-        elif ice_grid.startswith("oQU01"):
-            lines.append('                  io_type="pnetcdf,cdf5"')
-        elif ice_grid.startswith("oQU00"):
+        elif ice_grid.startswith("oQU"):
             lines.append('                  io_type="pnetcdf,cdf5"')
         else:
             lines.append('                  io_type="{}"'.format(ice_pio_typename))
@@ -444,9 +442,7 @@ def buildnml(case, caseroot, compname):
         lines.append('                  type="input"')
         if ice_grid.startswith("oRRS1"):
             lines.append('                  io_type="pnetcdf,cdf5"')
-        elif ice_grid.startswith("oQU01"):
-            lines.append('                  io_type="pnetcdf,cdf5"')
-        elif ice_grid.startswith("oQU00"):
+        elif ice_grid.startswith("oQU"):
             lines.append('                  io_type="pnetcdf,cdf5"')
         else:
             lines.append('                  io_type="{}"'.format(ice_pio_typename))
@@ -470,9 +466,7 @@ def buildnml(case, caseroot, compname):
         lines.append('                  type="input;output"')
         if ice_grid.startswith("oRRS1"):
             lines.append('                  io_type="pnetcdf,cdf5"')
-        elif ice_grid.startswith("oQU01"):
-            lines.append('                  io_type="pnetcdf,cdf5"')
-        elif ice_grid.startswith("oQU00"):
+        elif ice_grid.startswith("oQU"):
             lines.append('                  io_type="pnetcdf,cdf5"')
         else:
             lines.append('                  io_type="{}"'.format(ice_pio_typename))
@@ -490,9 +484,7 @@ def buildnml(case, caseroot, compname):
             lines.append('                  type="input"')
             if ice_grid.startswith("oRRS1"):
                 lines.append('                  io_type="pnetcdf,cdf5"')
-            elif ice_grid.startswith("oQU01"):
-                lines.append('                  io_type="pnetcdf,cdf5"')
-            elif ice_grid.startswith("oQU00"):
+            elif ice_grid.startswith("oQU"):
                 lines.append('                  io_type="pnetcdf,cdf5"')
             else:
                 lines.append('                  io_type="{}"'.format(ice_pio_typename))
@@ -1032,9 +1024,7 @@ def buildnml(case, caseroot, compname):
         lines.append('        type="input"')
         if ice_grid.startswith("oRRS1"):
             lines.append('                  io_type="pnetcdf,cdf5"')
-        elif ice_grid.startswith("oQU01"):
-            lines.append('                  io_type="pnetcdf,cdf5"')
-        elif ice_grid.startswith("oQU00"):
+        elif ice_grid.startswith("oQU"):
             lines.append('                  io_type="pnetcdf,cdf5"')
         else:
             lines.append('                  io_type="{}"'.format(ice_pio_typename))
