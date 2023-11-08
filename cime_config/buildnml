@@ -73,7 +73,6 @@ def buildnml(case, caseroot, compname):
     decomp_prefix = ''
     data_iceberg_file = ''
     points_file = ''
-    din_loc_tem = "{}/ice/mpas-cice/{}".format(din_loc_root,ice_mask)
 
     if ice_grid == 'oEC60to30v3':
         decomp_date = '161222'
@@ -130,61 +129,55 @@ def buildnml(case, caseroot, compname):
             logger.warning("         But no file available for this grid.")
 
     elif ice_grid == 'oQU120':
-        din_loc_tem = "/glade/p/cesmdata/cseg/inputdata/ocn/mpas-o/oQU120/"
-        decomp_date = '160318'
-        decomp_prefix = 'mpas-o.graph.info.'
-        grid_date = '160318'
+        decomp_date = '230524'
+        decomp_prefix = 'mpas-o.graph.info.QU120.'
+        grid_date = '230524'
         grid_prefix = 'ocean.QU.120km'
         if ice_ic_mode == 'spunup':
             logger.warning("WARNING: The specified compset is requesting seaice ICs spunup from a G-case")
             logger.warning("         But no file available for this grid.")
 
     elif ice_grid == 'oQU060':
-        decomp_date = '220131'
-        decomp_prefix = 'culled.graph.info.'
-        grid_date = '220131'
+        decomp_date = '230907'
+        decomp_prefix = 'mpas-o.graph.info.QU060.'
+        grid_date = '230907'
         grid_prefix = 'ocean.QU.060km'
-        din_loc_tem = '/glade/p/univ/ucsu0085/inputdata'
         if ice_ic_mode == 'spunup':
             logger.warning("WARNING: The specified compset is requesting seaice ICs spunup from a G-case")
             logger.warning("         But no file available for this grid.")
 
     elif ice_grid == 'oQU030':
-        decomp_date = '220131'
-        decomp_prefix = 'culled.graph.info.'
-        grid_date = '220131'
+        decomp_date = '230907'
+        decomp_prefix = 'mpas-o.graph.info.QU030.'
+        grid_date = '230907'
         grid_prefix = 'ocean.QU.030km'
-        din_loc_tem = '/glade/p/univ/ucsu0085/inputdata'
         if ice_ic_mode == 'spunup':
             logger.warning("WARNING: The specified compset is requesting seaice ICs spunup from a G-case")
             logger.warning("         But no file available for this grid.")
 
     elif ice_grid == 'oQU015':
-        decomp_date = '220131'
-        decomp_prefix = 'culled.graph.info.'
-        grid_date = '220131'
+        decomp_date = '230907'
+        decomp_prefix = 'mpas-o.graph.info.QU015.'
+        grid_date = '230907'
         grid_prefix = 'ocean.QU.015km'
-        din_loc_tem = '/glade/p/univ/ucsu0085/inputdata'
         if ice_ic_mode == 'spunup':
             logger.warning("WARNING: The specified compset is requesting seaice ICs spunup from a G-case")
             logger.warning("         But no file available for this grid.")
 
     elif ice_grid == 'oQU0075':
-        decomp_date = '220131'
-        decomp_prefix = 'culled.graph.info.'
-        grid_date = '220131'
+        decomp_date = '230907'
+        decomp_prefix = 'mpas-o.graph.info.QU0075.'
+        grid_date = '230907'
         grid_prefix = 'ocean.QU.0075km'
-        din_loc_tem = '/glade/p/univ/ucsu0085/inputdata'
         if ice_ic_mode == 'spunup':
             logger.warning("WARNING: The specified compset is requesting seaice ICs spunup from a G-case")
             logger.warning("         But no file available for this grid.")
 
     elif ice_grid == 'oQU00375':
-        decomp_date = '220131'
-        decomp_prefix = 'culled.graph.info.'
-        grid_date = '220131'
+        decomp_date = '230907'
+        decomp_prefix = 'mpas-o.graph.info.QU00375.'
+        grid_date = '230907'
         grid_prefix = 'ocean.QU.00375km'
-        din_loc_tem = '/glade/p/univ/ucsu0085/inputdata'
         if ice_ic_mode == 'spunup':
             logger.warning("WARNING: The specified compset is requesting seaice ICs spunup from a G-case")
             logger.warning("         But no file available for this grid.")
@@ -324,8 +317,10 @@ def buildnml(case, caseroot, compname):
     # Note: this is not setup for multiple instances
     #--------------------------------------------------------------------
 
-    #input_file = "{}/ice/mpas-cice/{}/{}.{}.nc".format(din_loc_root, ice_mask, grid_prefix, grid_date)
-    input_file = "{}/{}.{}.nc".format(din_loc_tem, grid_prefix, grid_date)
+    input_file = "{}/ice/mpas-cice/{}/{}.{}.nc".format(din_loc_root, ice_mask, grid_prefix, grid_date)
+    snow_data = "{}/ice/mpas-cice/snicar_drdt_bst_fit_60_c04262019.nc".format(din_loc_root)
+    snicar_data = "{}/ice/mpas-cice/snicar_optics_5bnd_snow_and_aerosols.nc".format(din_loc_root)
+    snicar_data2 = "{}/ice/mpas-cice/snicar_optics_5bnd_mam_c140303_mpas_cice.nc".format(din_loc_root)
     if run_type == 'hybrid' or run_type == 'branch':
         input_file = "{}/{}.mpassi.rst.{}_{}.nc".format(rundir, run_refcase, run_refdate, run_reftod)
         expect(os.path.exists(input_file), " ERROR mpassi buildnml: missing specified restart file for branch or hybrid run: {}".format(input_file))
@@ -339,8 +334,6 @@ def buildnml(case, caseroot, compname):
 
     with open(os.path.join(casebuild, "mpassi.input_data_list"), "w") as input_list:
         input_list.write("mesh = {}\n".format(input_file))
-        input_list.write("snow_data = /glade/work/dazlich/seaice/snicar_drdt_bst_fit_60_c04262019.nc\n")
-        input_list.write("snicar_data = /glade/work/dazlich/seaice/snicar_optics_5bnd_snow_and_aerosols.nc\n")
         if points_file != '':
             input_list.write("points = {}/ice/mpas-cice/{}/{}\n".format(din_loc_root, ice_mask, points_file))
         if iceberg_mode == 'data':
@@ -438,9 +431,7 @@ def buildnml(case, caseroot, compname):
         lines.append('                  type="none"')
         if ice_grid.startswith("oRRS1"):
             lines.append('                  io_type="pnetcdf,cdf5"')
-        elif ice_grid.startswith("oQU01"):
-            lines.append('                  io_type="pnetcdf,cdf5"')
-        elif ice_grid.startswith("oQU00"):
+        elif ice_grid.startswith("oQU"):
             lines.append('                  io_type="pnetcdf,cdf5"')
         else:
             lines.append('                  io_type="{}"'.format(ice_pio_typename))
@@ -451,9 +442,7 @@ def buildnml(case, caseroot, compname):
         lines.append('                  type="input"')
         if ice_grid.startswith("oRRS1"):
             lines.append('                  io_type="pnetcdf,cdf5"')
-        elif ice_grid.startswith("oQU01"):
-            lines.append('                  io_type="pnetcdf,cdf5"')
-        elif ice_grid.startswith("oQU00"):
+        elif ice_grid.startswith("oQU"):
             lines.append('                  io_type="pnetcdf,cdf5"')
         else:
             lines.append('                  io_type="{}"'.format(ice_pio_typename))
@@ -477,9 +466,7 @@ def buildnml(case, caseroot, compname):
         lines.append('                  type="input;output"')
         if ice_grid.startswith("oRRS1"):
             lines.append('                  io_type="pnetcdf,cdf5"')
-        elif ice_grid.startswith("oQU01"):
-            lines.append('                  io_type="pnetcdf,cdf5"')
-        elif ice_grid.startswith("oQU00"):
+        elif ice_grid.startswith("oQU"):
             lines.append('                  io_type="pnetcdf,cdf5"')
         else:
             lines.append('                  io_type="{}"'.format(ice_pio_typename))
@@ -497,9 +484,7 @@ def buildnml(case, caseroot, compname):
             lines.append('                  type="input"')
             if ice_grid.startswith("oRRS1"):
                 lines.append('                  io_type="pnetcdf,cdf5"')
-            elif ice_grid.startswith("oQU01"):
-                lines.append('                  io_type="pnetcdf,cdf5"')
-            elif ice_grid.startswith("oQU00"):
+            elif ice_grid.startswith("oQU"):
                 lines.append('                  io_type="pnetcdf,cdf5"')
             else:
                 lines.append('                  io_type="{}"'.format(ice_pio_typename))
@@ -568,21 +553,21 @@ def buildnml(case, caseroot, compname):
         lines.append('<immutable_stream name="ModalAerosolsInput"')
         lines.append('                  type="input"')
         lines.append('                  io_type="{}"'.format(ice_pio_typename))
-        lines.append('                  filename_template="snicar_optics_5bnd_mam_c140303_mpas_cice.nc"')
+        lines.append('                  filename_template="{}"'.format(snicar_data2))
         lines.append('                  filename_interval="none"')
         lines.append('                  input_interval="none" />')
         lines.append('')
         lines.append('<immutable_stream name="SnowAgingPropertiesInput"')
         lines.append('                  type="input"')
         lines.append('                  io_type="{}"'.format(ice_pio_typename))
-        lines.append('                  filename_template="/glade/work/dazlich/seaice/snicar_drdt_bst_fit_60_c04262019.nc"')
+        lines.append('                  filename_template="{}"'.format(snow_data))
         lines.append('                  filename_interval="none"')
         lines.append('                  input_interval="initial_only" />')
         lines.append('')
         lines.append('<immutable_stream name="SnicarInput"')
         lines.append('                  type="input"')
         lines.append('                  io_type="{}"'.format(ice_pio_typename))
-        lines.append('                  filename_template="/glade/work/dazlich/seaice/snicar_optics_5bnd_snow_and_aerosols.nc"')
+        lines.append('                  filename_template="{}"'.format(snicar_data))
         lines.append('                  filename_interval="none"')
         lines.append('                  input_interval="initial_only" />')
         lines.append('')
@@ -1039,9 +1024,7 @@ def buildnml(case, caseroot, compname):
         lines.append('        type="input"')
         if ice_grid.startswith("oRRS1"):
             lines.append('                  io_type="pnetcdf,cdf5"')
-        elif ice_grid.startswith("oQU01"):
-            lines.append('                  io_type="pnetcdf,cdf5"')
-        elif ice_grid.startswith("oQU00"):
+        elif ice_grid.startswith("oQU"):
             lines.append('                  io_type="pnetcdf,cdf5"')
         else:
             lines.append('                  io_type="{}"'.format(ice_pio_typename))
