@@ -8,7 +8,8 @@ module seaice_core_interface
    use seaice_analysis_driver
    use mpas_log, only: mpas_log_write
 
-   public
+   private
+   public :: seaice_setup_core, seaice_setup_domain
 
    contains
 
