@@ -113,7 +113,7 @@ def _build_mpassi():
         if compiler == 'intel':
             fixedflags =  '"-UCPRINTEL -free"'
         elif compiler == 'intel-oneapi':
-            fixedflags =  '-free'
+            fixedflags =  '"-UCPRINTEL -free"'
         elif compiler == 'gnu':
             fixedflags =  '-ffree-form'
         elif compiler == 'nvhpc':
