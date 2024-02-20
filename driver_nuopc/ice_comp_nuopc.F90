@@ -1,3 +1,4 @@
+dazlich@derecho4:~/ewv2.1/mpassi-pres/components/mpas-seaice> cat driver_nuopc/ice_comp_nuopc.F90
 module ice_comp_nuopc
 
   !----------------------------------------------------------------------------
@@ -17,6 +18,7 @@ module ice_comp_nuopc
   use NUOPC_Model            , only : NUOPC_ModelGet, SetVM
   use ice_import_export     , only : ice_advertise_fields, ice_realize_fields
   use ice_import_export     , only : ice_import, ice_export, ice_cpl_dt !, tlast_coupled
+  use ice_import_export     , only : ice_prescribed_init, ice_prescribed_run
   use shr_kind_mod           , only : cl=>shr_kind_cl, cs=>shr_kind_cs
   !r8 slips in through another module
   use shr_file_mod           
@@ -972,9 +974,9 @@ contains
     ! Prescribed ice initialization
     !-----------------------------------------------------------------
 
-    !DD will assume this is false for now and will implement if needed
-    !DDcall ice_prescribed_init(clock, ice_mesh, rc)
-    !DDif (ChkErr(rc,__LINE__,u_FILE_u)) return
+    call ice_prescribed_init(clock, Emesh, my_task=iam, master_task=mastertask,    &
+                             nu_diag=icelogunit,domain=domain_ptr, rc=rc)
+    if (ChkErr(rc,__LINE__,u_FILE_u)) return
 
     !-----------------------------------------------------------------
     ! Create cice export state
@@ -1168,9 +1170,8 @@ contains
         write (WCstring,'(F18.3)') current_wallclock_time
         call mpas_log_write(trim(timeStamp) // '  WC time:' // WCstring)
 
-        !DD assumed false for now
-        !DD! get prescribed ice coverage
-        !DDcall ice_prescribed_run(domain_ptr, currTime)
+        ! get prescribed ice coverage
+        call ice_prescribed_run(domain_ptr, currTime, icelogUnit )
 
         ! pre-timestep analysis computation
         if (debugOn) call mpas_log_write('   Starting analysis precompute', masterOnly=.true.)
@@ -1561,3 +1562,4 @@ contains
 
 !***********************************************************************
 end module ice_comp_nuopc
+dazlich@derecho4:~/ewv2.1/mpassi-pres/components/mpas-seaice> 
