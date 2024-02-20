@@ -1,3 +1,4 @@
+dazlich@derecho4:~/ewv2.1/mpassi-pres/components/mpas-seaice> cat bld/namelist_files/namelist_definition_mpassi.xml
 <?xml version="1.0"?>
 
 <namelist_definition>
@@ -2565,6 +2566,18 @@ Default: Defined in namelist_defaults.xml
 	category="prescribed_ice" group="prescribed_ice">
 Prescribed ice stream parameter for e3sm sea ice driver.
 
+<entry id="config_prescribed_ice_stream_meshfile" type="char*1024"
+	category="prescribed_ice" group="prescribed_ice">
+Prescribed ice stream parameter for e3sm sea ice driver.
+
+Valid values: Unknown
+Default: Defined in namelist_defaults.xml
+</entry>
+
+<entry id="config_prescribed_ice_stream_mapalgo" type="char*1024"
+	category="prescribed_ice" group="prescribed_ice">
+Prescribed ice stream parameter for e3sm sea ice driver.
+
 Valid values: Unknown
 Default: Defined in namelist_defaults.xml
 </entry>
@@ -3715,3 +3728,4 @@ Default: Defined in namelist_defaults.xml
 </entry>
 
 </namelist_definition>
+dazlich@derecho4:~/ewv2.1/mpassi-pres/components/mpas-seaice> 
