@@ -2574,10 +2574,10 @@
 		<var name="skeletalNitrateConcCell"		type="real"	dimensions="ONE nCells Time"			name_in_code="skeletalNitrateConcCell"		packages="pkgTracerSkeletalNitrate"/>
 		<var name="skeletalSilicateConcCell"		type="real"	dimensions="ONE nCells Time"			name_in_code="skeletalSilicateConcCell"	packages="pkgTracerSkeletalSilicate"/>
 		<var name="skeletalAmmoniumConcCell"		type="real"	dimensions="ONE nCells Time"			name_in_code="skeletalAmmoniumConcCell"	packages="pkgTracerSkeletalAmmonium"/>
-		<var name="skeletalDMSConcCell"		type="real"	dimensions="ONE nCells Timename_in_code="skeletalDMSConcCell"		packages="pkgTracerSkeletalDMS"/>
+		<var name="skeletalDMSConcCell"		type="real"	dimensions="ONE nCells Time"			name_in_code="skeletalDMSConcCell"		packages="pkgTracerSkeletalDMS"/>
 		<var name="skeletalDMSPpConcCell"		type="real"	dimensions="ONE nCells Time"			name_in_code="skeletalDMSPpConcCell"		packages="pkgTracerSkeletalDMS"/>
 		<var name="skeletalDMSPdConcCell"		type="real"	dimensions="ONE nCells Time"			name_in_code="skeletalDMSPdConcCell"		packages="pkgTracerSkeletalDMS"/>
-		<var name="skeletalNonreactiveConcCell"	type="real"	dimensions="ONE nCells Timename_in_code="skeletalNonreactiveConcCell"	packages="pkgTracerSkeletalNonreactive"/>
+		<var name="skeletalNonreactiveConcCell"	type="real"	dimensions="ONE nCells Time"			name_in_code="skeletalNonreactiveConcCell"	packages="pkgTracerSkeletalNonreactive"/>
 		<var name="skeletalHumicsConcCell"		type="real"	dimensions="ONE nCells Time"			name_in_code="skeletalHumicsConcCell"		packages="pkgTracerSkeletalHumics"/>
 		<var name="skeletalParticulateIronConcCell"	type="real"	dimensions="nParticulateIron nCells Time"	name_in_code="skeletalParticulateIronConcCell"	packages="pkgTracerSkeletalIron"/>
 		<var name="skeletalDissolvedIronConcCell"	type="real"	dimensions="nDissolvedIron nCells Time"	name_in_code="skeletalDissolvedIronConcCell"	packages="pkgTracerSkeletalIron"/>
@@ -2602,10 +2602,10 @@
 		<var name="verticalNitrateSnowCell"		type="real"	dimensions="TWO nCells Time"			name_in_code="verticalNitrateSnowCell"		packages="pkgTracerVerticalNitrate"/>
 		<var name="verticalSilicateSnowCell"		type="real"	dimensions="TWO nCells Time"			name_in_code="verticalSilicateSnowCell"	packages="pkgTracerVerticalSilicate"/>
 		<var name="verticalAmmoniumSnowCell"		type="real"	dimensions="TWO nCells Time"			name_in_code="verticalAmmoniumSnowCell"	packages="pkgTracerVerticalAmmonium"/>
-		<var name="verticalDMSSnowCell"		type="real"	dimensions="TWO nCells Timename_in_code="verticalDMSSnowCell"		packages="pkgTracerVerticalDMS"/>
+		<var name="verticalDMSSnowCell"		type="real"	dimensions="TWO nCells Time"		name_in_code="verticalDMSSnowCell"		packages="pkgTracerVerticalDMS"/>
 		<var name="verticalDMSPpSnowCell"		type="real"	dimensions="TWO nCells Time"			name_in_code="verticalDMSPpSnowCell"		packages="pkgTracerVerticalDMS"/>
 		<var name="verticalDMSPdSnowCell"		type="real"	dimensions="TWO nCells Time"			name_in_code="verticalDMSPdSnowCell"		packages="pkgTracerVerticalDMS"/>
-		<var name="verticalNonreactiveSnowCell"	type="real"	dimensions="TWO nCells Timename_in_code="verticalNonreactiveSnowCell"	packages="pkgTracerVerticalNonreactive"/>
+		<var name="verticalNonreactiveSnowCell"	type="real"	dimensions="TWO nCells Time"			name_in_code="verticalNonreactiveSnowCell"	packages="pkgTracerVerticalNonreactive"/>
 		<var name="verticalHumicsSnowCell"		type="real"	dimensions="TWO nCells Time"			name_in_code="verticalHumicsSnowCell"		packages="pkgTracerVerticalHumics"/>
 		<var name="verticalParticulateIronSnowCell"	type="real"	dimensions="nPartIronSnowLayers nCells Time"	name_in_code="verticalParticulateIronSnowCell"	packages="pkgTracerVerticalIron"/>
 		<var name="verticalDissolvedIronSnowCell"	type="real"	dimensions="nDisIronSnowLayers nCells Time"	name_in_code="verticalDissolvedIronSnowCell"	packages="pkgTracerVerticalIron"/>
@@ -3349,7 +3349,7 @@
 		<var name="verticalSalinityGrady"		type="real"	dimensions="nBioLayers nCategories nCells"		name_in_code="verticalSalinityGrady"			packages="pkgTracerZSalinity"/>
 	</var_struct>
 	<var_struct name="tracer_conservation" time_levs="2">
-		<var name="iceAreaCategoryCons"		type="real"	dimensions="ONE nCategoriesname_in_code="iceAreaCategoryCons"/>
+		<var name="iceAreaCategoryCons"		type="real"	dimensions="ONE nCategories"		name_in_code="iceAreaCategoryCons"/>
 		<var name="iceVolumeCategoryCons"		type="real"	dimensions="ONE nCategories"				name_in_code="iceVolumeCategoryCons"/>
 		<var name="snowVolumeCategoryCons"		type="real"	dimensions="ONE nCategories"				name_in_code="snowVolumeCategoryCons"/>
 		<var name="surfaceTemperatureCons"		type="real"	dimensions="ONE nCategories"				name_in_code="surfaceTemperatureCons"/>
@@ -3380,10 +3380,10 @@
 		<var name="skeletalNitrateConcCons"		type="real"	dimensions="ONE nCategories"				name_in_code="skeletalNitrateConcCons"		packages="pkgTracerSkeletalNitrate"/>
 		<var name="skeletalSilicateConcCons"		type="real"	dimensions="ONE nCategories"				name_in_code="skeletalSilicateConcCons"	packages="pkgTracerSkeletalSilicate"/>
 		<var name="skeletalAmmoniumConcCons"		type="real"	dimensions="ONE nCategories"				name_in_code="skeletalAmmoniumConcCons"	packages="pkgTracerSkeletalAmmonium"/>
-		<var name="skeletalDMSConcCons"		type="real"	dimensions="ONE nCategoriesname_in_code="skeletalDMSConcCons"		packages="pkgTracerSkeletalDMS"/>
+		<var name="skeletalDMSConcCons"		type="real"	dimensions="ONE nCategories"		name_in_code="skeletalDMSConcCons"		packages="pkgTracerSkeletalDMS"/>
 		<var name="skeletalDMSPpConcCons"		type="real"	dimensions="ONE nCategories"				name_in_code="skeletalDMSPpConcCons"		packages="pkgTracerSkeletalDMS"/>
 		<var name="skeletalDMSPdConcCons"		type="real"	dimensions="ONE nCategories"				name_in_code="skeletalDMSPdConcCons"		packages="pkgTracerSkeletalDMS"/>
-		<var name="skeletalNonreactiveConcCons"	type="real"	dimensions="ONE nCategoriesname_in_code="skeletalNonreactiveConcCons"	packages="pkgTracerSkeletalNonreactive"/>
+		<var name="skeletalNonreactiveConcCons"	type="real"	dimensions="ONE nCategories"		name_in_code="skeletalNonreactiveConcCons"	packages="pkgTracerSkeletalNonreactive"/>
 		<var name="skeletalHumicsConcCons"		type="real"	dimensions="ONE nCategories"				name_in_code="skeletalHumicsConcCons"		packages="pkgTracerSkeletalHumics"/>
 		<var name="skeletalParticulateIronConcCons"	type="real"	dimensions="nParticulateIron nCategories"		name_in_code="skeletalParticulateIronConcCons"	packages="pkgTracerSkeletalIron"/>
 		<var name="skeletalDissolvedIronConcCons"	type="real"	dimensions="nDissolvedIron nCategories"		name_in_code="skeletalDissolvedIronConcCons"	packages="pkgTracerSkeletalIron"/>
@@ -3394,10 +3394,10 @@
 		<var name="verticalNitrateSnowCons"		type="real"	dimensions="TWO nCategories"				name_in_code="verticalNitrateSnowCons"		packages="pkgTracerVerticalNitrate"/>
 		<var name="verticalSilicateSnowCons"		type="real"	dimensions="TWO nCategories"				name_in_code="verticalSilicateSnowCons"	packages="pkgTracerVerticalSilicate"/>
 		<var name="verticalAmmoniumSnowCons"		type="real"	dimensions="TWO nCategories"				name_in_code="verticalAmmoniumSnowCons"	packages="pkgTracerVerticalAmmonium"/>
-		<var name="verticalDMSSnowCons"		type="real"	dimensions="TWO nCategoriesname_in_code="verticalDMSSnowCons"		packages="pkgTracerVerticalDMS"/>
+		<var name="verticalDMSSnowCons"		type="real"	dimensions="TWO nCategories"		name_in_code="verticalDMSSnowCons"		packages="pkgTracerVerticalDMS"/>
 		<var name="verticalDMSPpSnowCons"		type="real"	dimensions="TWO nCategories"				name_in_code="verticalDMSPpSnowCons"		packages="pkgTracerVerticalDMS"/>
 		<var name="verticalDMSPdSnowCons"		type="real"	dimensions="TWO nCategories"				name_in_code="verticalDMSPdSnowCons"		packages="pkgTracerVerticalDMS"/>
-		<var name="verticalNonreactiveSnowCons"	type="real"	dimensions="TWO nCategoriesname_in_code="verticalNonreactiveSnowCons"	packages="pkgTracerVerticalNonreactive"/>
+		<var name="verticalNonreactiveSnowCons"	type="real"	dimensions="TWO nCategories"		name_in_code="verticalNonreactiveSnowCons"	packages="pkgTracerVerticalNonreactive"/>
 		<var name="verticalHumicsSnowCons"		type="real"	dimensions="TWO nCategories"				name_in_code="verticalHumicsSnowCons"		packages="pkgTracerVerticalHumics"/>
 		<var name="verticalParticulateIronSnowCons"	type="real"	dimensions="nPartIronSnowLayers nCategories"		name_in_code="verticalParticulateIronSnowCons"	packages="pkgTracerVerticalIron"/>
 		<var name="verticalDissolvedIronSnowCons"	type="real"	dimensions="nDisIronSnowLayers nCategories"		name_in_code="verticalDissolvedIronSnowCons"	packages="pkgTracerVerticalIron"/>
@@ -3579,7 +3579,7 @@
 		<var name="iCellTriangle"			type="integer"	dimensions="nTriPerEdgeRemap nEdges"			name_in_code="iCellTriangle"/>
 		<var name="triangleArea"			type="real"	dimensions="nTriPerEdgeRemap nEdges"			name_in_code="triangleArea"/>
 		<var name="departurePoint"			type="real"	dimensions="TWO nVertices"				name_in_code="departurePoint"/>
-		<var name="remapEdge"				type="integer"	dimensions="nEdges"name_in_code="remapEdge"/>
+		<var name="remapEdge"				type="integer"	dimensions="nEdges"	name_in_code="remapEdge"/>
 		<var name="cellsOnEdgeRemap"			type="integer"	dimensions="maxCellsPerEdgeRemap nEdges"		name_in_code="cellsOnEdgeRemap"/>
 		<var name="edgesOnEdgeRemap"			type="integer"	dimensions="maxEdgesPerEdgeRemap nEdges"		name_in_code="edgesOnEdgeRemap"/>
 		<var name="xVertexOnCell"			type="real"	dimensions="maxEdges nCells"				name_in_code="xVertexOnCell"/>
@@ -3588,27 +3588,27 @@
 		<var name="yVertexOnEdge"			type="real"	dimensions="maxVerticesPerEdgeRemap nEdges"		name_in_code="yVertexOnEdge"/>
 		<var name="transCellToGlobal"			type="real"	dimensions="R3 R3 nCells"				name_in_code="transCellToGlobal"/>
 		<var name="transGlobalToCell"			type="real"	dimensions="R3 R3 nCells"				name_in_code="transGlobalToCell"/>
-		<var name="transVertexToGlobal"		type="real"	dimensions="R3 R3 nVerticesname_in_code="transVertexToGlobal"/>
-		<var name="transGlobalToVertex"		type="real"	dimensions="R3 R3 nVerticesname_in_code="transGlobalToVertex"/>
+		<var name="transVertexToGlobal"		type="real"	dimensions="R3 R3 nVertices"		name_in_code="transVertexToGlobal"/>
+		<var name="transGlobalToVertex"		type="real"	dimensions="R3 R3 nVertices"		name_in_code="transGlobalToVertex"/>
 		<var name="transEdgeToGlobal"			type="real"	dimensions="R3 R3 nEdges"				name_in_code="transEdgeToGlobal"/>
 		<var name="transGlobalToEdge"			type="real"	dimensions="R3 R3 nEdges"				name_in_code="transGlobalToEdge"/>
 		<var name="minLengthEdgesOnVertex"		type="real"	dimensions="nVertices"					name_in_code="minLengthEdgesOnVertex"/>
-		<var name="xAvgCell"				type="real"	dimensions="nCells"name_in_code="xAvgCell"/>
-		<var name="yAvgCell"				type="real"	dimensions="nCells"name_in_code="yAvgCell"/>
-		<var name="xxAvgCell"				type="real"	dimensions="nCells"name_in_code="xxAvgCell"/>
-		<var name="xyAvgCell"				type="real"	dimensions="nCells"name_in_code="xyAvgCell"/>
-		<var name="yyAvgCell"				type="real"	dimensions="nCells"name_in_code="yyAvgCell"/>
-		<var name="xxxAvgCell"				type="real"	dimensions="nCells"name_in_code="xxxAvgCell"/>
-		<var name="xxyAvgCell"				type="real"	dimensions="nCells"name_in_code="xxyAvgCell"/>
-		<var name="xyyAvgCell"				type="real"	dimensions="nCells"name_in_code="xyyAvgCell"/>
-		<var name="yyyAvgCell"				type="real"	dimensions="nCells"name_in_code="yyyAvgCell"/>
+		<var name="xAvgCell"				type="real"	dimensions="nCells"	name_in_code="xAvgCell"/>
+		<var name="yAvgCell"				type="real"	dimensions="nCells"	name_in_code="yAvgCell"/>
+		<var name="xxAvgCell"				type="real"	dimensions="nCells"	name_in_code="xxAvgCell"/>
+		<var name="xyAvgCell"				type="real"	dimensions="nCells"	name_in_code="xyAvgCell"/>
+		<var name="yyAvgCell"				type="real"	dimensions="nCells"	name_in_code="yyAvgCell"/>
+		<var name="xxxAvgCell"				type="real"	dimensions="nCells"	name_in_code="xxxAvgCell"/>
+		<var name="xxyAvgCell"				type="real"	dimensions="nCells"	name_in_code="xxyAvgCell"/>
+		<var name="xyyAvgCell"				type="real"	dimensions="nCells"	name_in_code="xyyAvgCell"/>
+		<var name="yyyAvgCell"				type="real"	dimensions="nCells"	name_in_code="yyyAvgCell"/>
 		<var name="xxxxAvgCell"			type="real"	dimensions="nCells"		name_in_code="xxxxAvgCell"/>
 		<var name="xxxyAvgCell"			type="real"	dimensions="nCells"		name_in_code="xxxyAvgCell"/>
 		<var name="xxyyAvgCell"			type="real"	dimensions="nCells"		name_in_code="xxyyAvgCell"/>
 		<var name="xyyyAvgCell"			type="real"	dimensions="nCells"		name_in_code="xyyyAvgCell"/>
 		<var name="yyyyAvgCell"			type="real"	dimensions="nCells"		name_in_code="yyyyAvgCell"/>
-		<var name="maskEdge"				type="integer"	dimensions="nEdges"name_in_code="maskEdge"/>
-		<var name="maskCell"				type="integer"	dimensions="nCells"name_in_code="maskCell"/>
+		<var name="maskEdge"				type="integer"	dimensions="nEdges"	name_in_code="maskEdge"/>
+		<var name="maskCell"				type="integer"	dimensions="nCells"	name_in_code="maskCell"/>
 		<var name="maskCategoryCell"			type="integer"	dimensions="nCategories nCells"			name_in_code="maskCategoryCell"/>
 		<var name="workCategoryCell"			type="real"	dimensions="nCategories nCells"			name_in_code="workCategoryCell"/>
 	</var_struct>
@@ -3730,7 +3730,7 @@
 	<var_struct name="velocity_weak" time_levs="1" packages="pkgWeak">
 		<var name="normalVectorPolygon"		type="real"	dimensions="TWO maxEdges nCells"		name_in_code="normalVectorPolygon"/>
 		<var name="normalVectorTriangle"		type="real"	dimensions="TWO vertexDegree nVertices"	name_in_code="normalVectorTriangle"/>
-		<var name="latCellRotated"			type="real"	dimensions="nCells"name_in_code="latCellRotated"/>
+		<var name="latCellRotated"			type="real"	dimensions="nCells"	name_in_code="latCellRotated"/>
 		<var name="latVertexRotated"			type="real"	dimensions="nVertices"				name_in_code="latVertexRotated"/>
 		<var name="strain11weak"			type="real"	dimensions="nCells Time"			name_in_code="strain11"/>
 		<var name="strain22weak"			type="real"	dimensions="nCells Time"			name_in_code="strain22"/>
@@ -3960,7 +3960,7 @@
 	<!-- biogeochemistry -->
 	<var_struct name="biogeochemistry" time_levs="1" packages="pkgColumnBiogeochemistry">
 		<var name="newlyFormedIce"			type="integer"	dimensions="nCategories nCells"			name_in_code="newlyFormedIce"			packages="pkgColumnBiogeochemistry;pkgColumnPackage"/>
-		<var name="rayleighCriteriaReal"		type="real"	dimensions="nCells"name_in_code="rayleighCriteriaReal"/>
+		<var name="rayleighCriteriaReal"		type="real"	dimensions="nCells"	name_in_code="rayleighCriteriaReal"/>
 		<var name="atmosBioFluxes"			type="real"	dimensions="nZBGCTracers nCells Time"			name_in_code="atmosBioFluxes"/>
 		<var name="atmosIceBioFluxes"			type="real"	dimensions="nZBGCTracers nCells Time"			name_in_code="atmosIceBioFluxes"/>
 		<var name="snowIceBioFluxes"			type="real"	dimensions="nZBGCTracers nCells Time"			name_in_code="snowIceBioFluxes"/>
