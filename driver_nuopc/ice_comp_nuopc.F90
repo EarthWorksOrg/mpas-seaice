@@ -1,4 +1,3 @@
-dazlich@derecho4:~/ewv2.1/mpassi-pres/components/mpas-seaice> cat driver_nuopc/ice_comp_nuopc.F90
 module ice_comp_nuopc
 
   !----------------------------------------------------------------------------
@@ -1562,4 +1561,3 @@ contains
 
 !***********************************************************************
 end module ice_comp_nuopc
-dazlich@derecho4:~/ewv2.1/mpassi-pres/components/mpas-seaice> 
