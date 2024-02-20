@@ -1,3 +1,4 @@
+module ice_import_export
 
   use ESMF
   use NUOPC
