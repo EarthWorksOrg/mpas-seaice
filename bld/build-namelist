@@ -419,6 +419,7 @@ my $CONTINUE_RUN           = "$xmlvars{'CONTINUE_RUN'}";
 
 my $SSTICE_GRID_FILENAME;
 my $SSTICE_DATA_FILENAME;
+my $SSTICE_MESH_FILENAME;
 my $SSTICE_YEAR_ALIGN;
 my $SSTICE_YEAR_START;
 my $SSTICE_YEAR_END;
@@ -426,6 +427,7 @@ my $SSTICE_STREAM;
 if ($prognostic_mode eq 'prescribed') {
     $SSTICE_GRID_FILENAME = $xmlvars{'SSTICE_GRID_FILENAME'};
     $SSTICE_DATA_FILENAME = $xmlvars{'SSTICE_DATA_FILENAME'};
+    $SSTICE_MESH_FILENAME = $xmlvars{'SSTICE_MESH_FILENAME'};
     $SSTICE_YEAR_ALIGN    = $xmlvars{'SSTICE_YEAR_ALIGN'};
     $SSTICE_YEAR_START    = $xmlvars{'SSTICE_YEAR_START'};
     $SSTICE_YEAR_END      = $xmlvars{'SSTICE_YEAR_END'};
@@ -927,6 +929,9 @@ if ($prognostic_mode eq 'prescribed') {
         if ($SSTICE_DATA_FILENAME eq 'UNSET') {
                 die "SSTICE_DATA_FILENAME must be set for MPAS-Seaice prescribed mode \n";
         }
+        if ($SSTICE_MESH_FILENAME eq 'UNSET') {
+                die "SSTICE_MESH_FILENAME must be set for MPAS-Seaice prescribed mode \n";
+        }
         if ($SSTICE_YEAR_ALIGN eq '-999') {
                 die "SSTICE_YEAR_ALIGN must be set for MPAS-Seaice prescribed mode \n";
         }
@@ -953,6 +958,8 @@ if ($prognostic_mode eq 'prescribed') {
         add_default($nl, 'config_prescribed_ice_model_year_align'  , 'val'=>"$SSTICE_YEAR_ALIGN");
         add_default($nl, 'config_prescribed_ice_stream_fldvarname' , 'val'=>"ice_cov");
         add_default($nl, 'config_prescribed_ice_stream_fldfilename', 'val'=>"$SSTICE_DATA_FILENAME");
+        add_default($nl, 'config_prescribed_ice_stream_meshfile'   , 'val'=>"$SSTICE_MESH_FILENAME");
+        add_default($nl, 'config_prescribed_ice_stream_mapalgo'    , 'val'=>"bilinear");
         add_default($nl, 'config_prescribed_ice_stream_domtvarname', 'val'=>"time");
         add_default($nl, 'config_prescribed_ice_stream_domxvarname', 'val'=>"$stream_domxvarname");
         add_default($nl, 'config_prescribed_ice_stream_domyvarname', 'val'=>"$stream_domyvarname");
@@ -1623,4 +1630,3 @@ sub any() {
   }
   return 0;
 }
-
