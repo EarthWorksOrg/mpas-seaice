@@ -12,9 +12,9 @@
 
 module seaice_advection
 
-  use mpas_derived_types
-  use mpas_pool_routines
-  use mpas_timer
+  use mpass_derived_types
+  use mpass_pool_routines
+  use mpass_timer
 
   implicit none
 

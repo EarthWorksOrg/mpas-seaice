@@ -12,10 +12,10 @@
 
 module seaice_velocity_solver_wachspress
 
-  use mpas_derived_types
-  use mpas_pool_routines
-  use mpas_timer
-  use mpas_log, only: mpas_log_write
+  use mpass_derived_types
+  use mpass_pool_routines
+  use mpass_timer
+  use mpass_log, only: mpas_log_write
 
   implicit none
 
@@ -61,7 +61,7 @@ contains
        basisIntegralsV, &
        basisIntegralsMetric)!{{{
 
-    use mpas_timer
+    use mpass_timer
 
     use seaice_velocity_solver_variational_shared, only: &
          seaice_calc_local_coords

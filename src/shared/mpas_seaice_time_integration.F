@@ -12,9 +12,9 @@
 
 module seaice_time_integration
 
-  use mpas_derived_types
-  use mpas_pool_routines
-  use mpas_timekeeping
+  use mpass_derived_types
+  use mpass_pool_routines
+  use mpass_timekeeping
 
   implicit none
 
@@ -44,7 +44,7 @@ contains
        clock, &
        itimestep)!{{{
 
-    use mpas_timer
+    use mpass_timer
 
     use seaice_diagnostics, only: &
          seaice_set_time_diagnostics, &

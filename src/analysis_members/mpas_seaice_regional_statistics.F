@@ -13,12 +13,12 @@
 
 module seaice_regional_statistics
 
-   use mpas_derived_types
-   use mpas_pool_routines
-   use mpas_dmpar
-   use mpas_timekeeping
-   use mpas_stream_manager
-   use mpas_log, only: mpas_log_write
+   use mpass_derived_types
+   use mpass_pool_routines
+   use mpass_dmpar
+   use mpass_timekeeping
+   use mpass_stream_manager
+   use mpass_log, only: mpas_log_write
 
    implicit none
    private
@@ -57,7 +57,7 @@ module seaice_regional_statistics
            outputFieldName, &
            inputFieldName)
 
-        use mpas_derived_types
+        use mpass_derived_types
 
         type(domain_type), intent(inout) :: &
              domain
@@ -642,7 +642,7 @@ contains
            outputFieldName, &
            inputFieldName)
 
-        use mpas_derived_types
+        use mpass_derived_types
 
         type(domain_type), intent(inout) :: &
              domain
@@ -660,7 +660,7 @@ contains
            outputFieldName, &
            inputFieldName)
 
-        use mpas_derived_types
+        use mpass_derived_types
 
         type(domain_type), intent(inout) :: &
              domain

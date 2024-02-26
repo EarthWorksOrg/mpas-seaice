@@ -13,14 +13,14 @@
 
 module seaice_forcing
 
-  use mpas_kind_types
-  use mpas_timer
-  use mpas_derived_types
-  use mpas_pool_routines
-  use mpas_timekeeping
-  use mpas_forcing
-  use mpas_stream_manager
-  use mpas_log, only: mpas_log_write
+  use mpass_kind_types
+  use mpass_timer
+  use mpass_derived_types
+  use mpass_pool_routines
+  use mpass_timekeeping
+  use mpass_forcing
+  use mpass_stream_manager
+  use mpass_log, only: mpas_log_write
 
   implicit none
 
