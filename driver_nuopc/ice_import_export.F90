@@ -41,6 +41,10 @@ module ice_import_export
    use ice_constants_colpkg, only : Tffresh, ice_ref_salinity, p001
    use ice_colpkg, only: colpkg_sea_freezing_temperature
 
+   use dshr_strdata_mod , only : shr_strdata_type, shr_strdata_print
+   use dshr_strdata_mod , only : shr_strdata_init_from_inline, shr_strdata_advance
+   use dshr_methods_mod , only : dshr_fldbun_getfldptr
+
   implicit none
   public
 
@@ -48,6 +52,8 @@ module ice_import_export
   public  :: ice_realize_fields
   public  :: ice_import
   public  :: ice_export
+  public  :: ice_prescribed_init
+  public  :: ice_prescribed_run
 
   integer, public :: ice_cpl_dt    ! length of coupling interval in seconds - set by coupler/ESMF
 
@@ -85,6 +91,8 @@ module ice_import_export
   real(R8)    , parameter  :: czero = 0.0_R8
   character(*), parameter  :: u_FILE_u = &
        __FILE__
+
+  type(shr_strdata_type)          :: sdat           ! prescribed data stream
 
 !==============================================================================
 contains
@@ -1741,5 +1749,347 @@ contains
 !EOC
 
    end subroutine basal_pressure!}}}
+
+!***********************************************************************
+!BOP
+!
+! !IROUTINE: ice_prescribed_init
+!
+! !INTERFACE:
+  subroutine ice_prescribed_init(clock, mesh, my_task, master_task, nu_diag, domain, rc)
+!
+! !DESCRIPTION:
+! Initialize prescribed ice
+!
+! !USES:
+         
+    include 'mpif.h'
+! !INPUT/OUTPUT PARAMETERS:
+    ! input/output parameters
+    type(ESMF_Clock)       , intent(in)  :: clock
+    type(ESMF_Mesh)        , intent(in)  :: mesh
+    integer                , intent(in)  :: my_task
+    logical                , intent(in)  :: master_task
+    integer                , intent(in)  :: nu_diag
+    type (domain_type), pointer, intent(in)  :: domain
+    integer                , intent(out) :: rc
+!
+! !REVISION HISTORY:
+! Author: Adrian K. Turner
+!EOP
+!-----------------------------------------------------------------------
+!
+!  local variables
+!
+!-----------------------------------------------------------------------
+
+    integer, parameter :: nFilesMaximum = 400 ! max number of files
+
+    integer, pointer :: stream_year_first   ! first year in stream to use
+    integer, pointer :: stream_year_last    ! last year in stream to use
+    integer, pointer :: model_year_align    ! align stream_year_first
+                                   ! with this model year
+!DD    character(len=strKIND), pointer :: stream_fldVarName
+    character(len=1024), pointer :: stream_fldFileNameIn
+    character(len=1024), pointer :: stream_meshfile
+    character(len=1024), pointer :: stream_mapalgo
+    character(len=1024) :: stream_fldFileName(nFilesMaximum)
+!DD    character(len=strKIND), pointer :: stream_domTvarName
+!DD    character(len=strKIND), pointer :: stream_domXvarName
+!DD    character(len=strKIND), pointer :: stream_domYvarName
+!DD    character(len=strKIND), pointer :: stream_domAreaName
+!DD    character(len=strKIND), pointer :: stream_domMaskName
+!DD    character(len=strKIND), pointer :: stream_domFileName
+!DD    character(len=strKIND), pointer :: stream_mapread
+!DD    logical, pointer :: stream_fill ! true if data fill required
+
+    integer :: &
+         ierr, &
+         iFile, &
+         nFiles
+
+    character(len=8) :: &
+         fillalgo
+
+    character(len=16) :: &
+         inst_name
+
+    integer, pointer :: &
+         nCellsSolve
+
+    Integer :: &
+         nCells
+
+!DD    character(len=strKIND), pointer :: &
+!DD         config_calendar_type
+
+!DD    character(len=strKIND) :: &
+!DD         calendar_type
+
+    logical, pointer :: &
+         config_use_prescribed_ice
+
+    call MPAS_pool_get_config(domain % configs, "config_use_prescribed_ice", config_use_prescribed_ice)
+    if (config_use_prescribed_ice) then
+
+       call mpas_pool_get_config(domain % configs, "config_prescribed_ice_stream_year_first", stream_year_first)
+       call mpas_pool_get_config(domain % configs, "config_prescribed_ice_stream_year_last", stream_year_last)
+       call mpas_pool_get_config(domain % configs, "config_prescribed_ice_model_year_align", model_year_align)
+!DD       call mpas_pool_get_config(domain % configs, "config_prescribed_ice_stream_fldvarname", stream_fldVarName)
+       call mpas_pool_get_config(domain % configs, "config_prescribed_ice_stream_fldfilename", stream_fldFileNameIn)
+       call mpas_pool_get_config(domain % configs, "config_prescribed_ice_stream_meshfile", stream_meshfile)
+       call mpas_pool_get_config(domain % configs, "config_prescribed_ice_stream_mapalgo", stream_mapalgo)
+!DD       call mpas_pool_get_config(domain % configs, "config_prescribed_ice_stream_domtvarname", stream_domTvarName)
+!DD       call mpas_pool_get_config(domain % configs, "config_prescribed_ice_stream_domxvarname", stream_domXvarName)
+!DD       call mpas_pool_get_config(domain % configs, "config_prescribed_ice_stream_domyvarname", stream_domYvarName)
+!DD       call mpas_pool_get_config(domain % configs, "config_prescribed_ice_stream_domareaname", stream_domAreaName)
+!DD       call mpas_pool_get_config(domain % configs, "config_prescribed_ice_stream_dommaskname", stream_domMaskName)
+!DD       call mpas_pool_get_config(domain % configs, "config_prescribed_ice_stream_domfilename", stream_domFileName)
+!DD       call mpas_pool_get_config(domain % configs, "config_prescribed_ice_stream_mapread", stream_mapread)
+!DD       call mpas_pool_get_config(domain % configs, "config_prescribed_ice_stream_fill", stream_fill)
+
+       ! file array
+       stream_fldFileName(1) = trim(stream_fldFileNameIn)
+       do iFile = 2, nFilesMaximum
+          stream_fldFileName(iFile) = ' '
+       end do
+
+       ! file number
+       nFiles = 0
+       do iFile = 1, nFilesMaximum
+          if (stream_fldFileName(iFile) /= ' ') nFiles = nFiles + 1
+       end do
+
+!DD       ! Read shr_strdata_nml namelist
+!DD       if (stream_fill) then
+!DD          fillalgo='nn'
+!DD       else
+!DD          fillalgo='none'
+!DD       endif
+
+       call MPAS_log_write(' ')
+       call MPAS_log_write('This is the prescribed ice coverage option.')
+       call MPAS_log_write('  stream_year_first  = $i', intArgs=(/stream_year_first/))
+       call MPAS_log_write('  stream_year_last   = $i', intArgs=(/stream_year_last/))
+       call MPAS_log_write('  model_year_align   = $i', intArgs=(/model_year_align/))
+       call MPAS_log_write('  stream_meshfile = '//trim(stream_meshfile) )
+!DD       call MPAS_log_write('  stream_fldVarName  = '//trim(stream_fldVarName))
+       do iFile = 1, nFiles
+          call MPAS_log_write('  stream_fldFileName = $i: '//trim(stream_fldFileName(iFile)), intArgs=(/iFile/))
+       end do
+!DD       call MPAS_log_write('  stream_domTvarName = '//trim(stream_domTvarName))
+!DD       call MPAS_log_write('  stream_domXvarName = '//trim(stream_domXvarName))
+!DD       call MPAS_log_write('  stream_domYvarName = '//trim(stream_domYvarName))
+!DD       call MPAS_log_write('  stream_domFileName = '//trim(stream_domFileName))
+!DD       call MPAS_log_write('  stream_domAreaName = '//trim(stream_domAreaName))
+!DD       call MPAS_log_write('  stream_domMaskName = '//trim(stream_domMaskName))
+!DD       call MPAS_log_write('  stream_mapread     = '//trim(stream_mapread))
+!DD       call MPAS_log_write('  stream_fillalgo    = '//trim(fillalgo))
+       call MPAS_log_write('  stream_mapalso = '//trim(stream_mapalgo) )
+       call MPAS_log_write(' ')
+
+!DD       inst_name = seq_comm_name(compid)
+
+       call MPAS_pool_get_dimension(domain % blocklist % dimensions, "nCellsSolve", nCellsSolve)
+       call MPI_Allreduce(nCellsSolve, nCells, 1, MPI_Integer, MPI_SUM, domain % dminfo % comm, ierr)
+       
+
+!DD       call MPAS_pool_get_config(domain % configs, "config_calendar_type", config_calendar_type)
+!DD       if (trim(config_calendar_type) == "gregorian") then
+!DD          calendar_type = shr_cal_gregorian
+!DD       else if (trim(config_calendar_type) == "gregorian_noleap") then
+!DD          calendar_type = shr_cal_noleap
+!DD       else
+!DD          call MPAS_log_write("ice_prescribed_init: Unknown calendar type: "//trim(config_calendar_type))
+!DD       endif
+
+!DD--- translate mct to nuopc
+
+!DD--- begin old code
+!DD       call shr_strdata_create( &
+!DD            sdat, &
+!DD            name = "prescribed_ice", &
+!DD            mpicom = domain % dminfo % comm, &
+!DD            compid = compid, &
+!DD            gsmap = gsmap, &
+!DD            ggrid = dom, &
+!DD            nxg = nCells, &
+!DD            nyg = 1, &
+!DD            yearFirst = stream_year_first, &
+!DD            yearLast = stream_year_last, &
+!DD            yearAlign = model_year_align, &
+!DD            offset = 0, &
+!DD            domFilePath = '', &
+!DD            domFileName = trim(stream_domFileName), &
+!DD            domTvarName = trim(stream_domTvarName), &
+!DD            domXvarName = trim(stream_domXvarName), &
+!DD            domYvarName = trim(stream_domYvarName), &
+!DD            domAreaName = trim(stream_domAreaName), &
+!DD            domMaskName = trim(stream_domMaskName), &
+!DD            filePath = '', &
+!DD            filename = stream_fldFileName(1:nFiles), &
+!DD            fldListFile = trim(stream_fldVarName), &
+!DD            fldListModel = trim(stream_fldVarName), &
+!DD            pio_subsystem = shr_pio_getiosys(inst_name), &
+!DD            pio_iotype = shr_pio_getiotype(inst_name), &
+!DD            fillalgo = trim(fillalgo), &
+!DD            calendar = trim(calendar_type), &
+!DD            mapread = trim(stream_mapread))
+
+!DD--- begin new code
+
+       ! initialize sdat
+       call shr_strdata_init_from_inline(sdat,               &
+            my_task             = my_task,                   &
+            logunit             = nu_diag,                   &
+            compname            = 'ICE',                     &
+            model_clock         = clock,                     &
+            model_mesh          = mesh,                      &
+            stream_meshfile     = stream_meshfile,           &
+            stream_lev_dimname  = 'null',                    &
+            stream_mapalgo      = trim(stream_mapalgo),      &
+            stream_filenames    = stream_fldFileName(1:nfiles), &
+            stream_fldlistFile  = (/'ice_cov'/),             &
+            stream_fldListModel = (/'ice_cov'/),             &
+            stream_yearFirst    = stream_year_First,          &
+            stream_yearLast     = stream_year_Last,           &
+            stream_yearAlign    = model_year_Align ,         &
+            stream_offset       = 0,                         &
+            stream_taxmode      = 'cycle',                   &
+            stream_dtlimit      = 1.5_dbl_kind,              &
+            stream_tintalgo     = 'linear',                  &
+            rc                  = rc)
+       if (ChkErr(rc,__LINE__,u_FILE_u)) return
+
+       ! print out sdat info
+       if (master_task) then
+          call shr_strdata_print(sdat,'ice coverage prescribed data')
+       endif
+
+!DD--- end translation
+
+    endif ! config_use_prescribed_ice
+
+  end subroutine ice_prescribed_init
+
+!***********************************************************************
+!BOP
+!
+! !IROUTINE: ice_prescribed_run
+!
+! !INTERFACE:
+  subroutine ice_prescribed_run( domain, currTime, nu_diag )!{{{
+!
+! !DESCRIPTION:
+! Set ice coverage for prescribed ice mode
+!
+! !USES:
+! !INPUT/OUTPUT PARAMETERS:
+    type (domain_type), pointer :: &
+         domain
+    type (MPAS_Time_Type), intent(in) :: &
+         currTime
+    integer                , intent(in)  :: nu_diag
+!
+! !REVISION HISTORY:
+! Author: Adrian K. Turner
+!EOP
+!-----------------------------------------------------------------------
+!
+!  local variables
+!
+!-----------------------------------------------------------------------
+
+    real(kind=dbl_kind), pointer :: dataptr(:)
+
+    logical, pointer :: &
+         config_use_prescribed_ice
+
+    integer :: &
+         mDateIn, &
+         secIn, &
+         YYYY, MM, DD, DoY, H, M, S, &
+         ierr
+
+    integer :: &
+         n, &
+         iCell, &
+         rc
+
+    type (block_type), pointer :: &
+         block_ptr
+
+    type (mpas_pool_type), pointer :: &
+         meshPool, &
+         prescribedIcePool
+
+    integer, pointer :: &
+         nCellsSolve
+
+    real(kind=RKIND), dimension(:), pointer :: &
+         iceCoverage
+
+    type (field1DReal), pointer :: &
+         iceCoverageField
+    
+    call MPAS_pool_get_config(domain % configs, "config_use_prescribed_ice", config_use_prescribed_ice)
+    if (config_use_prescribed_ice) then
+
+       call MPAS_get_time(currTime, YYYY, MM, DD, DoY, H, M, S, ierr)
+       mDateIn = YYYY * 10000 + MM * 100 + DD
+       secIn = H * 3600 + M * 60 + S
+
+!DD--- translate mct to nuopc
+
+!DD--- old code
+!DD       call shr_strdata_advance(&
+!DD            sdat, &
+!DD            mDateIn, &
+!DD            SecIn, &
+!DD            domain % dminfo % comm, &
+!DD            'mpassi_pice')
+
+!DD--- newcode
+       call shr_strdata_advance(sdat, ymd=mDateIn, tod=SecIn, logunit=nu_diag, istr='cice_pice', rc=rc)
+       if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, line=__LINE__, file=__FILE__)) then
+          call ESMF_Finalize(endflag=ESMF_END_ABORT)
+       end if
+
+       ! Get pointer for stream data that is time and spatially interpolate to model time and grid
+       call dshr_fldbun_getFldPtr(sdat%pstrm(1)%fldbun_model, 'ice_cov', dataptr, rc=rc)
+       if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, line=__LINE__, file=__FILE__)) then
+          call ESMF_Finalize(endflag=ESMF_END_ABORT)
+       end if
+!DD--- end translation
+
+       n = 0
+       block_ptr => domain % blocklist
+       do while(associated(block_ptr))
+
+          call MPAS_pool_get_subpool(block_ptr % structs, 'mesh', meshPool)
+          call MPAS_pool_get_subpool(block_ptr % structs, 'prescribed_ice', prescribedIcePool)
+
+          call MPAS_pool_get_dimension(meshPool, 'nCellsSolve', nCellsSolve)
+
+          call MPAS_pool_get_array(prescribedIcePool, 'iceCoverage', iceCoverage)
+
+          iceCoverage(:) = 0.0_RKIND
+
+          do iCell = 1, nCellsSolve
+             n = n + 1
+!DD             iceCoverage(iCell) = sdat % avs(1) % rAttr(1,n)
+             iceCoverage(iCell) = dataptr(n)
+          enddo ! iCell
+
+          block_ptr => block_ptr % next
+       end do
+
+       call MPAS_pool_get_subpool(domain % blocklist % structs, 'prescribed_ice', prescribedIcePool)
+       call MPAS_pool_get_field(prescribedIcePool, 'iceCoverage', iceCoverageField)
+       call MPAS_dmpar_exch_halo_field(iceCoverageField)
+
+    endif
+
+  end subroutine ice_prescribed_run
 
 end module ice_import_export
