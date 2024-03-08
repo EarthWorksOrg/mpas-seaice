@@ -469,6 +469,8 @@ if ($prognostic_mode eq 'prescribed') {
         add_default($nl, 'config_prescribed_ice_model_year_align'  , 'val'=>"$SSTICE_YEAR_ALIGN");
         add_default($nl, 'config_prescribed_ice_stream_fldvarname' , 'val'=>"ice_cov");
         add_default($nl, 'config_prescribed_ice_stream_fldfilename', 'val'=>"$SSTICE_DATA_FILENAME");
+        add_default($nl, 'config_prescribed_ice_stream_meshfile'   , 'val'=>"$SSTICE_MESH_FILENAME");
+        add_default($nl, 'config_prescribed_ice_stream_mapalgo'    , 'val'=>"bilinear");
         add_default($nl, 'config_prescribed_ice_stream_domtvarname', 'val'=>"time");
         add_default($nl, 'config_prescribed_ice_stream_domxvarname', 'val'=>"$stream_domxvarname");
         add_default($nl, 'config_prescribed_ice_stream_domyvarname', 'val'=>"$stream_domyvarname");
@@ -701,4 +703,3 @@ add_default($nl, 'config_AM_timeSeriesStatsCustom_duration_intervals');
 add_default($nl, 'config_AM_timeSeriesStatsCustom_repeat_intervals');
 add_default($nl, 'config_AM_timeSeriesStatsCustom_reset_intervals');
 add_default($nl, 'config_AM_timeSeriesStatsCustom_backward_output_offset');
-
