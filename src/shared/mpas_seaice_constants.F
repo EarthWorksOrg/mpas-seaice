@@ -12,7 +12,7 @@
 
 module seaice_constants
 
-  use mpas_derived_types
+  use mpass_derived_types
 
   use ice_constants_colpkg, only: &
        gravit, &

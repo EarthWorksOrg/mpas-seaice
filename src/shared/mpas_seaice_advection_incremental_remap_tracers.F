@@ -12,10 +12,10 @@
 !-----------------------------------------------------------------------
 module seaice_advection_incremental_remap_tracers
 
-   use mpas_derived_types
-   use mpas_pool_routines
-   use mpas_dmpar
-   use mpas_log, only: mpas_log_write
+   use mpass_derived_types
+   use mpass_pool_routines
+   use mpass_dmpar
+   use mpass_log, only: mpas_log_write
 
    implicit none
    private
@@ -1130,7 +1130,7 @@ contains
 
   subroutine seaice_update_tracer_halo(tracersHead, domain, timeLevelIn)
 
-    use mpas_dmpar
+    use mpass_dmpar
 
     use seaice_diagnostics, only: &
          seaice_load_balance_timers
@@ -1181,7 +1181,7 @@ contains
 
   subroutine update_tracer_halo(tracersHead, domain, timeLevelIn)
 
-    use mpas_dmpar
+    use mpass_dmpar
 
     type(tracer_type), pointer, intent(in) :: &
          tracersHead ! do not alter this pointer - it should always point to the first element
@@ -1227,7 +1227,7 @@ contains
 
   subroutine seaice_init_update_tracer_halo_exch_group(tracersHead, domain)
 
-    use mpas_dmpar
+    use mpass_dmpar
 
     type(tracer_type), pointer, intent(in) :: &
          tracersHead ! do not alter this pointer - it should always point to the first element
@@ -1305,7 +1305,7 @@ contains
 
   subroutine update_tracer_halo_exch_group(tracersHead, domain, timeLevelIn)
 
-    use mpas_dmpar
+    use mpass_dmpar
 
     type(tracer_type), pointer, intent(in) :: &
          tracersHead ! do not alter this pointer - it should always point to the first element

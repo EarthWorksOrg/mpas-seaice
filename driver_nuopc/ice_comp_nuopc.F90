@@ -27,13 +27,13 @@ module ice_comp_nuopc
   use nuopc_shr_methods      , only : chkerr, state_setscalar, state_getscalar, state_diagnose, alarmInit
   use nuopc_shr_methods      , only : set_component_logging, get_component_instance, log_clock_advance
 
-  use mpas_derived_types
-  use mpas_timekeeping
-  use mpas_stream_manager
-  use mpas_abort
-  use mpas_pool_routines
-  use mpas_framework
-  use mpas_timer
+  use mpass_derived_types
+  use mpass_timekeeping
+  use mpass_stream_manager
+  use mpass_abort
+  use mpass_pool_routines
+  use mpass_framework
+  use mpass_timer
   
   use seaice_column, only : seaice_column_reinitialize_fluxes
   use seaice_forcing, only : post_atmospheric_coupling, post_oceanic_coupling,   &
@@ -255,12 +255,12 @@ contains
   subroutine InitializeRealize(gcomp, importState, exportState, clock, rc)
 
     use ESMF               , only: ESMF_VMGet
-      use mpas_stream_manager, only : MPAS_stream_mgr_init, MPAS_build_stream_filename, MPAS_stream_mgr_validate_streams
+      use mpass_stream_manager, only : MPAS_stream_mgr_init, MPAS_build_stream_filename, MPAS_stream_mgr_validate_streams
       use iso_c_binding, only : c_char, c_loc, c_ptr, c_int
-      use mpas_c_interfacing, only : mpas_f_to_c_string, mpas_c_to_f_string
-      use mpas_timekeeping, only : mpas_get_clock_time, mpas_get_time
-      use mpas_bootstrapping, only : mpas_bootstrap_framework_phase1, mpas_bootstrap_framework_phase2
-      use mpas_log
+      use mpass_c_interfacing, only : mpas_f_to_c_string, mpas_c_to_f_string
+      use mpass_timekeeping, only : mpas_get_clock_time, mpas_get_time
+      use mpass_bootstrapping, only : mpas_bootstrap_framework_phase1, mpas_bootstrap_framework_phase2
+      use mpass_log
 
     ! Arguments
     type(ESMF_GridComp)  :: gcomp

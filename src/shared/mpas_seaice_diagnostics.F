@@ -12,11 +12,11 @@
 
 module seaice_diagnostics
 
-  use mpas_derived_types
-  use mpas_pool_routines
-  use mpas_timekeeping
-  use mpas_io_units
-  use mpas_log, only: mpas_log_write
+  use mpass_derived_types
+  use mpass_pool_routines
+  use mpass_timekeeping
+  use mpass_io_units
+  use mpass_log, only: mpas_log_write
 
   implicit none
 
@@ -508,7 +508,7 @@ contains
    use mpi
 #endif
 #endif
-   use mpas_timer
+   use mpass_timer
 
     type(domain_type), intent(in) :: &
          domain

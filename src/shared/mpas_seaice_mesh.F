@@ -12,10 +12,10 @@
 
 module seaice_mesh
 
-  use mpas_derived_types
-  use mpas_pool_routines
-  use mpas_dmpar
-  use mpas_log, only: mpas_log_write
+  use mpass_derived_types
+  use mpass_pool_routines
+  use mpass_dmpar
+  use mpass_log, only: mpas_log_write
 
   implicit none
 
@@ -82,7 +82,7 @@ contains
   subroutine rescale_mesh(&
        domain)!{{{
 
-    use mpas_stream_manager
+    use mpass_stream_manager
 
     type (domain_type), intent(inout) :: &
          domain !< Input/Output:

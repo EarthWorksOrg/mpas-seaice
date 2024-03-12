@@ -13,11 +13,11 @@
 
 module seaice_advection_incremental_remap
 
-   use mpas_derived_types
-   use mpas_pool_routines
-   use mpas_dmpar
-   use mpas_timer
-   use mpas_log, only: mpas_log_write
+   use mpass_derived_types
+   use mpass_pool_routines
+   use mpass_dmpar
+   use mpass_timer
+   use mpass_log, only: mpas_log_write
 
    use seaice_advection_incremental_remap_tracers, only: &
         tracer_type, &
@@ -164,8 +164,8 @@ contains
 
   subroutine seaice_init_advection_incremental_remap(domain)
 
-    use mpas_rbf_interpolation, only: mpas_rbf_interp_initialize
-    use mpas_vector_reconstruction, only: mpas_init_reconstruct
+    use mpass_rbf_interpolation, only: mpas_rbf_interp_initialize
+    use mpass_vector_reconstruction, only: mpas_init_reconstruct
     use seaice_advection_incremental_remap_tracers, only: &
          seaice_init_update_tracer_halo_exch_group
 
@@ -2342,7 +2342,7 @@ contains
        updateHaloInitIn,  &
        updateHaloFinalIn)
 
-    use mpas_dmpar
+    use mpass_dmpar
 
     use seaice_diagnostics, only: &
          seaice_load_balance_timers

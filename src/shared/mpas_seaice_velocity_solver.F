@@ -14,12 +14,12 @@ module seaice_velocity_solver
 
 #include "gpu_macros.inc"
 
-  use mpas_derived_types
-  use mpas_pool_routines
-  use mpas_timekeeping
-  use mpas_dmpar
-  use mpas_timer
-  use mpas_log, only: mpas_log_write, mpas_log_info
+  use mpass_derived_types
+  use mpass_pool_routines
+  use mpass_timekeeping
+  use mpass_dmpar
+  use mpass_timer
+  use mpass_log, only: mpas_log_write, mpas_log_info
 
   implicit none
 

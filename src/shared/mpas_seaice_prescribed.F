@@ -12,9 +12,9 @@
 
 module seaice_prescribed
 
-  use mpas_derived_types
-  use mpas_pool_routines
-  use mpas_forcing
+  use mpass_derived_types
+  use mpass_pool_routines
+  use mpass_forcing
   use seaice_forcing, only: seaiceForcingGroups
 
   implicit none

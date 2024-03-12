@@ -11,18 +11,18 @@ module ice_import_export
   use nuopc_shr_methods,     only: chkerr
 
    ! MPAS framework modules
-   use mpas_framework
-   use mpas_derived_types
-   use mpas_pool_routines
-   use mpas_stream_manager
-   !use mpas_kind_types, only : r8 => r8kind
-   use mpas_io_units
-   use mpas_timekeeping
-   use mpas_dmpar
-   use mpas_log
+   use mpass_framework
+   use mpass_derived_types
+   use mpass_pool_routines
+   use mpass_stream_manager
+   !use mpass_kind_types, only : r8 => r8kind
+   use mpass_io_units
+   use mpass_timekeeping
+   use mpass_dmpar
+   use mpass_log
 
    use iso_c_binding, only : c_char, c_loc, c_ptr, c_int
-   use mpas_c_interfacing, only : mpas_f_to_c_string, mpas_c_to_f_string
+   use mpass_c_interfacing, only : mpas_f_to_c_string, mpas_c_to_f_string
 
    ! MPASSI modules
    use seaice_analysis_driver

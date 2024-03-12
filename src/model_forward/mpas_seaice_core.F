@@ -1,12 +1,12 @@
 module seaice_core
 
-   use mpas_framework
-   use mpas_timekeeping
+   use mpass_framework
+   use mpass_timekeeping
    use seaice_analysis_driver
    use seaice_column
-   use mpas_threading
-   use mpas_timer, only: mpas_timer_start, mpas_timer_stop
-   use mpas_log, only: mpas_log_write
+   use mpass_threading
+   use mpass_timer, only: mpas_timer_start, mpas_timer_stop
+   use mpass_log, only: mpas_log_write
 
    private
    public :: &
@@ -33,8 +33,8 @@ module seaice_core
 
    function seaice_core_init(domain, startTimeStamp) result(iErr)
 
-      use mpas_derived_types
-      use mpas_stream_manager
+      use mpass_derived_types
+      use mpass_stream_manager
 
       use seaice_diagnostics, only: &
            seaice_initialize_time_diagnostics
@@ -228,7 +228,7 @@ module seaice_core
 
    subroutine mpas_init_block(domain, dt)
 
-      use mpas_derived_types
+      use mpass_derived_types
 
       use seaice_initialize, only: seaice_init
 
@@ -256,9 +256,9 @@ module seaice_core
 
    function seaice_core_run(domain) result(iErr)
 
-      use mpas_derived_types
-      use mpas_kind_types
-      use mpas_stream_manager
+      use mpass_derived_types
+      use mpass_kind_types
+      use mpass_stream_manager
       use seaice_time_integration, only: seaice_timestep_finalize
       use seaice_forcing, only: &
            seaice_forcing_get, &
@@ -386,7 +386,7 @@ module seaice_core
 
    subroutine mpas_timestep(domain, itimestep, timeStamp)
 
-      use mpas_derived_types
+      use mpass_derived_types
       use seaice_time_integration, only: seaice_timestep
 
       implicit none
@@ -413,8 +413,8 @@ module seaice_core
 
    function seaice_core_finalize(domain) result(iErr)
 
-      use mpas_derived_types
-      use mpas_decomp
+      use mpass_derived_types
+      use mpass_decomp
       use seaice_column, only: &
            seaice_column_finalize
       use seaice_mesh_pool, only: &

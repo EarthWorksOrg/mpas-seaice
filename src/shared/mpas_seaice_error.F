@@ -12,10 +12,10 @@
 
 module seaice_error
 
-  use mpas_derived_types
-  use mpas_pool_routines
-  use mpas_stream_manager
-  use mpas_log
+  use mpass_derived_types
+  use mpass_pool_routines
+  use mpass_stream_manager
+  use mpass_log
 
   implicit none
 
@@ -79,7 +79,7 @@ contains
 
   subroutine seaice_check_critical_error(domain, abortFlag)
 
-    use mpas_dmpar, only: mpas_dmpar_max_int
+    use mpass_dmpar, only: mpas_dmpar_max_int
 
     type(domain_type), intent(in) :: &
          domain !< Input/Output:
