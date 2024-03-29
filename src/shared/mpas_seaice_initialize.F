@@ -12,15 +12,15 @@
 
 module seaice_initialize
 
-  use mpas_dmpar
-  use mpas_derived_types
-  use mpas_pool_routines
-  use mpas_timekeeping
-  use mpas_stream_manager
-  use mpas_io_units
-  use mpas_abort
-  use mpas_log, only: mpas_log_write
-  use mpas_timer, only: mpas_timer_start, mpas_timer_stop
+  use mpass_dmpar
+  use mpass_derived_types
+  use mpass_pool_routines
+  use mpass_timekeeping
+  use mpass_stream_manager
+  use mpass_io_units
+  use mpass_abort
+  use mpass_log, only: mpas_log_write
+  use mpass_timer, only: mpas_timer_start, mpas_timer_stop
 
   implicit none
 

@@ -1,12 +1,12 @@
 module seaice_core_interface
 
-   use mpas_derived_types
-   use mpas_pool_routines
-   use mpas_dmpar
-   use mpas_io_units
+   use mpass_derived_types
+   use mpass_pool_routines
+   use mpass_dmpar
+   use mpass_io_units
    use seaice_core
    use seaice_analysis_driver
-   use mpas_log, only: mpas_log_write
+   use mpass_log, only: mpas_log_write
 
    private
    public :: seaice_setup_core, seaice_setup_domain
@@ -84,7 +84,7 @@ module seaice_core_interface
    !-----------------------------------------------------------------------
    function seaice_setup_packages(configPool, packagePool, iocontext) result(ierr)!{{{
 
-      use mpas_derived_types
+      use mpass_derived_types
 
       implicit none
 
@@ -663,8 +663,8 @@ module seaice_core_interface
    !-----------------------------------------------------------------------
    function seaice_setup_decompositions(decompList) result(ierr)!{{{
 
-      use mpas_derived_types
-      use mpas_decomp
+      use mpass_derived_types
+      use mpass_decomp
 
       implicit none
 
@@ -713,7 +713,7 @@ module seaice_core_interface
    !-----------------------------------------------------------------------
    function seaice_setup_clock(core_clock, configs) result(ierr)!{{{
 
-      use mpas_derived_types
+      use mpass_derived_types
 
       implicit none
 
@@ -739,8 +739,8 @@ module seaice_core_interface
    !-----------------------------------------------------------------------
    function seaice_setup_log(logInfo, domain, unitNumbers) result(iErr)!{{{
 
-      use mpas_derived_types
-      use mpas_log
+      use mpass_derived_types
+      use mpass_log
 
       implicit none
 
@@ -784,8 +784,8 @@ module seaice_core_interface
    !-----------------------------------------------------------------------
    function seaice_get_mesh_stream(configs, stream) result(ierr)!{{{
 
-      use mpas_derived_types
-      use mpas_pool_routines
+      use mpass_derived_types
+      use mpass_pool_routines
 
       implicit none
 
@@ -832,7 +832,7 @@ module seaice_core_interface
    !
    !-----------------------------------------------------------------------
    function seaice_setup_block(block) result(iErr)!{{{
-      use mpas_derived_types
+      use mpass_derived_types
       type (block_type), pointer :: block
       integer :: iErr
 
