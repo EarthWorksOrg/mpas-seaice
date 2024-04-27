@@ -1790,10 +1790,10 @@ contains
     integer, pointer :: model_year_align    ! align stream_year_first
                                    ! with this model year
 !DD    character(len=strKIND), pointer :: stream_fldVarName
-    character(len=1024), pointer :: stream_fldFileNameIn
-    character(len=1024), pointer :: stream_meshfile
-    character(len=1024), pointer :: stream_mapalgo
-    character(len=1024) :: stream_fldFileName(nFilesMaximum)
+    character(len=512), pointer :: stream_fldFileNameIn
+    character(len=512), pointer :: stream_meshfile
+    character(len=512), pointer :: stream_mapalgo
+    character(len=512) :: stream_fldFileName(nFilesMaximum)
 !DD    character(len=strKIND), pointer :: stream_domTvarName
 !DD    character(len=strKIND), pointer :: stream_domXvarName
 !DD    character(len=strKIND), pointer :: stream_domYvarName
