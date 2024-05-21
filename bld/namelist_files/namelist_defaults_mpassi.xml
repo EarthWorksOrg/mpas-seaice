@@ -6,9 +6,14 @@
 <!-- seaice_model -->
 <config_dt>1800.0</config_dt>
 <config_dt ice_grid="oQU480">7200.0</config_dt>
-<config_dt ice_grid="oQU240">7200.0</config_dt>
+<config_dt ice_grid="oQU240">3600.0</config_dt>
 <config_dt ice_grid="oQU240wLI">7200.0</config_dt>
-<config_dt ice_grid="oQU120">3600.0</config_dt>
+<config_dt ice_grid="oQU120">1800.0</config_dt>
+<config_dt ice_grid="oQU060">900.0</config_dt>
+<config_dt ice_grid="oQU030">450.0</config_dt>
+<config_dt ice_grid="oQU015">240.0</config_dt>
+<config_dt ice_grid="oQU0075">120.0</config_dt>
+<config_dt ice_grid="oQU00375">60.0</config_dt>
 <config_dt ice_grid="oEC60to30v3">1800.0</config_dt>
 <config_dt ice_grid="oEC60to30v3wLI">1800.0</config_dt>
 <config_dt ice_grid="ECwISC30to60E1r2">1800.0</config_dt>
