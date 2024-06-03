@@ -12,8 +12,8 @@
 
 module seaice_special_boundaries
 
-  use mpas_derived_types
-  use mpas_pool_routines
+  use mpass_derived_types
+  use mpass_pool_routines
 
   implicit none
 

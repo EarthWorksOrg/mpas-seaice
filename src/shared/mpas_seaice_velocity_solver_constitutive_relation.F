@@ -12,9 +12,9 @@
 
 module seaice_velocity_solver_constitutive_relation
 
-  use mpas_derived_types
-  use mpas_pool_routines
-  use mpas_dmpar
+  use mpass_derived_types
+  use mpass_pool_routines
+  use mpass_dmpar
 
   implicit none
 

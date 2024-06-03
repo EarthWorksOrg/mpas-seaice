@@ -12,10 +12,10 @@
 
 module seaice_advection_upwind
 
-  use mpas_derived_types
-  use mpas_pool_routines
-  use mpas_timekeeping
-  use mpas_dmpar
+  use mpass_derived_types
+  use mpass_pool_routines
+  use mpass_timekeeping
+  use mpass_dmpar
 
   implicit none
 
@@ -1064,7 +1064,7 @@ contains
        InteriorEdge, &
        dt)!{{{
 
-    !use mpas_tracer_advection_mono, only: &
+    !use mpass_tracer_advection_mono, only: &
     !     mpas_tracer_advection_mono_tend_seaice
 
     type (MPAS_Clock_type), intent(in) :: &

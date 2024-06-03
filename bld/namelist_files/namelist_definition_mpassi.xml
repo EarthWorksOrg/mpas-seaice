@@ -2569,6 +2569,22 @@ Valid values: Unknown
 Default: Defined in namelist_defaults.xml
 </entry>
 
+<entry id="config_prescribed_ice_stream_meshfile" type="char*1024"
+	category="prescribed_ice" group="prescribed_ice">
+Prescribed ice stream parameter for e3sm sea ice driver.
+
+Valid values: Unknown
+Default: Defined in namelist_defaults.xml
+</entry>
+
+<entry id="config_prescribed_ice_stream_mapalgo" type="char*1024"
+	category="prescribed_ice" group="prescribed_ice">
+Prescribed ice stream parameter for e3sm sea ice driver.
+
+Valid values: Unknown
+Default: Defined in namelist_defaults.xml
+</entry>
+
 <entry id="config_prescribed_ice_stream_domtvarname" type="char*1024"
 	category="prescribed_ice" group="prescribed_ice">
 Prescribed ice stream parameter for e3sm sea ice driver.

@@ -17,6 +17,7 @@ module ice_comp_nuopc
   use NUOPC_Model            , only : NUOPC_ModelGet, SetVM
   use ice_import_export     , only : ice_advertise_fields, ice_realize_fields
   use ice_import_export     , only : ice_import, ice_export, ice_cpl_dt !, tlast_coupled
+  use ice_import_export     , only : ice_prescribed_init, ice_prescribed_run
   use shr_kind_mod           , only : cl=>shr_kind_cl, cs=>shr_kind_cs
   !r8 slips in through another module
   use shr_file_mod           
@@ -26,13 +27,13 @@ module ice_comp_nuopc
   use nuopc_shr_methods      , only : chkerr, state_setscalar, state_getscalar, state_diagnose, alarmInit
   use nuopc_shr_methods      , only : set_component_logging, get_component_instance, log_clock_advance
 
-  use mpas_derived_types
-  use mpas_timekeeping
-  use mpas_stream_manager
-  use mpas_abort
-  use mpas_pool_routines
-  use mpas_framework
-  use mpas_timer
+  use mpass_derived_types
+  use mpass_timekeeping
+  use mpass_stream_manager
+  use mpass_abort
+  use mpass_pool_routines
+  use mpass_framework
+  use mpass_timer
   
   use seaice_column, only : seaice_column_reinitialize_fluxes
   use seaice_forcing, only : post_atmospheric_coupling, post_oceanic_coupling,   &
@@ -254,12 +255,12 @@ contains
   subroutine InitializeRealize(gcomp, importState, exportState, clock, rc)
 
     use ESMF               , only: ESMF_VMGet
-      use mpas_stream_manager, only : MPAS_stream_mgr_init, MPAS_build_stream_filename, MPAS_stream_mgr_validate_streams
+      use mpass_stream_manager, only : MPAS_stream_mgr_init, MPAS_build_stream_filename, MPAS_stream_mgr_validate_streams
       use iso_c_binding, only : c_char, c_loc, c_ptr, c_int
-      use mpas_c_interfacing, only : mpas_f_to_c_string, mpas_c_to_f_string
-      use mpas_timekeeping, only : mpas_get_clock_time, mpas_get_time
-      use mpas_bootstrapping, only : mpas_bootstrap_framework_phase1, mpas_bootstrap_framework_phase2
-      use mpas_log
+      use mpass_c_interfacing, only : mpas_f_to_c_string, mpas_c_to_f_string
+      use mpass_timekeeping, only : mpas_get_clock_time, mpas_get_time
+      use mpass_bootstrapping, only : mpas_bootstrap_framework_phase1, mpas_bootstrap_framework_phase2
+      use mpass_log
 
     ! Arguments
     type(ESMF_GridComp)  :: gcomp
@@ -972,9 +973,9 @@ contains
     ! Prescribed ice initialization
     !-----------------------------------------------------------------
 
-    !DD will assume this is false for now and will implement if needed
-    !DDcall ice_prescribed_init(clock, ice_mesh, rc)
-    !DDif (ChkErr(rc,__LINE__,u_FILE_u)) return
+    call ice_prescribed_init(clock, Emesh, my_task=iam, master_task=mastertask,    &
+                             nu_diag=icelogunit,domain=domain_ptr, rc=rc)
+    if (ChkErr(rc,__LINE__,u_FILE_u)) return
 
     !-----------------------------------------------------------------
     ! Create cice export state
@@ -1168,9 +1169,8 @@ contains
         write (WCstring,'(F18.3)') current_wallclock_time
         call mpas_log_write(trim(timeStamp) // '  WC time:' // WCstring)
 
-        !DD assumed false for now
-        !DD! get prescribed ice coverage
-        !DDcall ice_prescribed_run(domain_ptr, currTime)
+        ! get prescribed ice coverage
+        call ice_prescribed_run(domain_ptr, currTime, icelogUnit )
 
         ! pre-timestep analysis computation
         if (debugOn) call mpas_log_write('   Starting analysis precompute', masterOnly=.true.)
