@@ -1,0 +1,21 @@
+<components version="2.0">
+
+  <comp_archive_spec compname="mpassi" compclass="ice" exclude_testing="true">
+    <rest_file_extension>rst</rest_file_extension>
+    <rest_file_extension>rst.am.timeSeriesStatsMonthly</rest_file_extension>
+    <hist_file_extension>hist</hist_file_extension>
+    <rest_history_varname>unset</rest_history_varname>
+    <rpointer>
+      <rpointer_file>rpointer.ice$NINST_STRING</rpointer_file>
+      <rpointer_content>$MPAS_DATENAME</rpointer_content>
+    </rpointer>
+    <test_file_names>
+      <tfile disposition="copy">rpointer.ice</tfile>
+      <tfile disposition="copy">casename.mpassi.rst.1976-01-01_00000.nc</tfile>
+      <tfile disposition="copy">casename.mpassi.rst.am.timeSeriesStatsMonthly.1976-01-01_00000.nc</tfile>
+      <tfile disposition="move">casename.mpassi.hist.1976-01-01_00000.nc</tfile>
+      <tfile disposition="move">casename.mpassi.hist.am.regionalStatistics.0001.01.nc</tfile>
+    </test_file_names>
+  </comp_archive_spec>
+
+</components>
