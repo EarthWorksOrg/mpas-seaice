@@ -1830,6 +1830,14 @@
 			description="Prescribed ice stream parameter for e3sm sea ice driver."
 			possible_values="Unknown"
 		/>
+                <nml_option name="config_prescribed_ice_stream_meshfile" type="character" default_value="unset" units="unitless"
+                        description="Prescribed ice stream parameter for e3sm sea ice driver."
+                        possible_values="Unknown"
+                />
+                <nml_option name="config_prescribed_ice_stream_mapalgo" type="character" default_value="unset" units="unitless"
+                        description="Prescribed ice stream parameter for e3sm sea ice driver."
+                        possible_values="Unknown"
+                />
 		<nml_option name="config_prescribed_ice_stream_domtvarname" type="character" default_value="time" units="unitless"
 			description="Prescribed ice stream parameter for e3sm sea ice driver."
 			possible_values="Unknown"
