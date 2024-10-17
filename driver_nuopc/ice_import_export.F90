@@ -220,6 +220,7 @@ contains
     call fldlist_add(fldsFrIce_num, fldsFrIce, 'Si_u10'                 ) !atmosReferenceSpeed10m
     call fldlist_add(fldsFrIce_num, fldsFrIce, 'Si_tref'                 ) !atmosReferenceTemperature2m
     call fldlist_add(fldsFrIce_num, fldsFrIce, 'Si_snowh'                ) !Si_snowh
+    call fldlist_add(fldsFrIce_num, fldsFrIce, 'Si_ithick'                ) !Si_snowh
     call fldlist_add(fldsFrIce_num, fldsFrIce, 'Si_qref'                  ) !atmosReferenceHumidity2m
     call fldlist_add(fldsFrIce_num, fldsFrIce, 'Faii_swnet'  ) !absorbedShortwaveFlux
     !if (config_use_column_shortwave) then
@@ -1026,6 +1027,7 @@ contains
     real (r8), pointer   :: Si_u10    (:) 
     real (r8), pointer   :: Si_tref   (:) 
     real (r8), pointer   :: Si_snowh  (:) 
+    real (r8), pointer   :: Si_ithick (:) 
     real (r8), pointer   :: Si_qref   (:) 
     real (r8), pointer   :: Faii_swnet(:) 
     real (r8), pointer   :: Fioi_melth(:) 
@@ -1099,7 +1101,8 @@ contains
       oceanDMSPdFlux,              &
       oceanHumicsFlux,             &
       carbonToNitrogenRatioAlgae,  &
-      carbonToNitrogenRatioDON
+      carbonToNitrogenRatioDON,    &
+      DOCPoolFractions
 
     !-----------------------------------------------------
     rc = ESMF_SUCCESS
@@ -1129,6 +1132,9 @@ contains
     call state_getfldptr(exportState, 'Si_tref'  , Si_tref  , rc)
       if (ChkErr(rc,__LINE__,u_FILE_u)) return
       Si_tref   (:) = 0.0_RKIND
+    call state_getfldptr(exportState, 'Si_ithick' , Si_ithick , rc)
+      if (ChkErr(rc,__LINE__,u_FILE_u)) return
+      Si_ithick  (:) = 0.0_RKIND
     call state_getfldptr(exportState, 'Si_snowh' , Si_snowh , rc)
       if (ChkErr(rc,__LINE__,u_FILE_u)) return
       Si_snowh  (:) = 0.0_RKIND
@@ -1328,6 +1334,7 @@ contains
              Si_vsno   (gcell) = snowVolumeCell(i)
              Si_u10    (gcell) = atmosReferenceSpeed10m(i)
              Si_tref   (gcell) = atmosReferenceTemperature2m(i)
+             Si_ithick (gcell) = iceVolumeCell(i) / ailohi
              Si_snowh  (gcell) = snowVolumeCell(i) * snowVolumeToSWE / ailohi
              Si_qref   (gcell) = atmosReferenceHumidity2m(i)
              Faii_swnet(gcell) = absorbedShortwaveFlux(i)
@@ -1897,7 +1904,7 @@ contains
 !DD       call MPAS_pool_get_config(domain % configs, "config_calendar_type", config_calendar_type)
 !DD       if (trim(config_calendar_type) == "gregorian") then
 !DD          calendar_type = shr_cal_gregorian
-!DD       else if (trim(config_calendar_type) == "gregorian_noleap") then
+!DD       else if (trim(config_calendar_type) == "noleap") then
 !DD          calendar_type = shr_cal_noleap
 !DD       else
 !DD          call MPAS_log_write("ice_prescribed_init: Unknown calendar type: "//trim(config_calendar_type))

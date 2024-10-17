@@ -134,7 +134,7 @@ def _copy_files_to_blddir(case):
     glob_dirs = [os.path.join(srcroot, "components/mpas-seaice", "src")]
     dest_dir = os.path.join(objroot, "ice")
     for glob_dir in glob_dirs:
-        filenames = glob.glob(glob_dir + "/Registry.xml")
+        filenames = glob.glob(glob_dir + "/Registry*.xml")
         for filename in filenames:
             shutil.copy2(filename, dest_dir)
 

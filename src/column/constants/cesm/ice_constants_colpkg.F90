@@ -19,6 +19,8 @@
       ! physical constants
       !-----------------------------------------------------------------
 
+      real(kind=dbl_kind),parameter :: SHR_CONST_MWC     = 12.0107_dbl_kind      ! molecular weight carbon
+
       real (kind=dbl_kind), parameter :: &
          secday    = SHR_CONST_CDAY  ,&! seconds in calendar day
          rhos      = 330.0_dbl_kind   ,&! density of snow (kg/m^3)
@@ -90,6 +92,7 @@
 !tcx note cice snowpatch = 0.02
 
          ! biogeochemistry
+         R_gC2molC = SHR_CONST_MWC, & ! molar mass of carbon
          sk_l = 0.03_dbl_kind      ! (m) skeletal layer thickness
 
       integer (kind=int_kind), parameter, public :: &

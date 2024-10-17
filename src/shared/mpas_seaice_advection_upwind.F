@@ -1064,7 +1064,7 @@ contains
        InteriorEdge, &
        dt)!{{{
 
-    !use mpass_tracer_advection_mono, only: &
+    !use mpas_tracer_advection_mono, only: &
     !     mpas_tracer_advection_mono_tend_seaice
 
     type (MPAS_Clock_type), intent(in) :: &
