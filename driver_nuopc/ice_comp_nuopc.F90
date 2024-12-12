@@ -89,7 +89,6 @@ module ice_comp_nuopc
 
   integer, private ::   &
       my_task, lmpicom, iam
-  integer, parameter  :: stdout = 6
    integer :: iceLogUnit ! unit number for ice log
    character(len=StrKIND) :: runtype, coupleTimeStamp
   character (len=*), parameter :: coupleAlarmID = 'coupling'
@@ -183,8 +182,13 @@ contains
     character(len=CL)  :: cvalue
     character(len=CL)  :: logmsg
     logical            :: isPresent, isSet
+    integer           :: shrlogunit
     character(len=*), parameter :: subname=trim(modName)//':(InitializeAdvertise) '
     !--------------------------------
+
+    ! reset shr logging to my log file
+    call set_component_logging(gcomp, iam==0, iceLogUnit, shrlogunit, rc)
+    if (ChkErr(rc,__LINE__,u_FILE_u)) return
 
     call NUOPC_CompAttributeGet(gcomp, name="ScalarFieldName", value=cvalue, isPresent=isPresent, isSet=isSet, rc=rc)
     if (ChkErr(rc,__LINE__,u_FILE_u)) return
@@ -468,7 +472,7 @@ contains
     ! Set up log file information
     ! ----------------
     !inst_suffix = seq_comm_suffix(iceID) ! a suffix to append to log file name
-    iceLogUnit = shr_file_getUnit() ! reserve unit number for log unit
+    !iceLogUnit = shr_file_getUnit() ! reserve unit number for log unit
     icePossibleErrUnit = shr_file_getUnit() ! reserve unit number for possible error log file
 
     ! Store shr log unit and level so we can reassign them later when ICE control is complete
@@ -956,7 +960,7 @@ contains
     !mastertask = iam == domain_ptr % dminfo % my_proc_id
     mastertask = iam == 0
     if (mastertask) then
-       write(stdout,*)'mesh file for mpassi domain is ',trim(cvalue)
+       write(iceLogUnit,*)'mesh file for mpassi domain is ',trim(cvalue)
     end if
 
 
@@ -1428,9 +1432,9 @@ contains
     if (dbug > 5) call ESMF_LogWrite(subname//' called', ESMF_LOGMSG_INFO)
 
     if (my_task == 0) then
-       write(stdout,F91)
-       write(stdout,F00) 'MPASSI: end of main integration loop'
-       write(stdout,F91)
+       write(iceLogUnit,F91)
+       write(iceLogUnit,F00) 'MPASSI: end of main integration loop'
+       write(iceLogUnit,F91)
     end if
 
     if (dbug > 5) call ESMF_LogWrite(subname//' done', ESMF_LOGMSG_INFO)
