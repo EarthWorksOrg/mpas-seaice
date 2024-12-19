@@ -64,7 +64,7 @@ Default: Defined in namelist_defaults.xml
 	category="seaice_model" group="seaice_model">
 Selection of the type of calendar that should be used in the simulation.
 
-Valid values: 'gregorian', 'gregorian_noleap'
+Valid values: 'gregorian', 'noleap'
 Default: Defined in namelist_defaults.xml
 </entry>
 
@@ -540,6 +540,38 @@ Valid values: true or false
 Default: Defined in namelist_defaults.xml
 </entry>
 
+<entry id="config_use_congelation_basal_melt" type="logical"
+	category="testing" group="testing">
+If true congelation and basal melt processes are active.
+
+Valid values: true or false
+Default: Defined in namelist_defaults.xml
+</entry>
+
+<entry id="config_use_lateral_melt" type="logical"
+	category="testing" group="testing">
+If true lateral melt process is active.
+
+Valid values: true or false
+Default: Defined in namelist_defaults.xml
+</entry>
+
+<entry id="config_use_latent_processes" type="logical"
+	category="testing" group="testing">
+If true latent heat processes are active.
+
+Valid values: true or false
+Default: Defined in namelist_defaults.xml
+</entry>
+
+<entry id="config_limit_air_temperatures" type="logical"
+	category="testing" group="testing">
+If true limit air temperatures above
+
+Valid values: true or false
+Default: Defined in namelist_defaults.xml
+</entry>
+
 
 <!-- velocity_solver -->
 
@@ -874,7 +906,7 @@ Default: Defined in namelist_defaults.xml
 
 <entry id="config_use_special_boundaries_tracers" type="logical"
 	category="column_tracers" group="column_tracers">
-Zero out tracers in given boundary cells.
+Modify tracers in given boundary cells.
 
 Valid values: true or false
 Default: Defined in namelist_defaults.xml
@@ -952,6 +984,14 @@ Default: Defined in namelist_defaults.xml
 Use the chlorophyll tracer (currently not implemented!)
 
 Valid values: false
+Default: Defined in namelist_defaults.xml
+</entry>
+
+<entry id="config_use_macromolecules" type="logical"
+	category="biogeochemistry" group="biogeochemistry">
+Use ocean macromolecule to determine DOC fractions in ice-ocean coupling
+
+Valid values: true or false
 Default: Defined in namelist_defaults.xml
 </entry>
 
@@ -2467,6 +2507,14 @@ Valid values: true or false
 Default: Defined in namelist_defaults.xml
 </entry>
 
+<entry id="config_ocean_mixed_layer_type" type="char*1024"
+	category="ocean" group="ocean">
+Type of mixed layer slab ocean model to use
+
+Valid values: 'cice', or 'e3sm'
+Default: Defined in namelist_defaults.xml
+</entry>
+
 <entry id="config_min_friction_velocity" type="real"
 	category="ocean" group="ocean">
 Minimum friction velocity for ice-ocean heat flux.
@@ -2736,6 +2784,49 @@ Default: Defined in namelist_defaults.xml
 </entry>
 
 
+<!-- AM_thicknesses -->
+
+<entry id="config_AM_thicknesses_enable" type="logical"
+	category="AM_thicknesses" group="AM_thicknesses">
+If true, ocean analysis member thicknesses is called.
+
+Valid values: true or false
+Default: Defined in namelist_defaults.xml
+</entry>
+
+<entry id="config_AM_thicknesses_compute_interval" type="char*1024"
+	category="AM_thicknesses" group="AM_thicknesses">
+Timestamp determining how often analysis member computation should be performed.
+
+Valid values: Any valid time stamp, 'dt', or 'output_interval'
+Default: Defined in namelist_defaults.xml
+</entry>
+
+<entry id="config_AM_thicknesses_output_stream" type="char*1024"
+	category="AM_thicknesses" group="AM_thicknesses">
+Name of the stream that the thicknesses analysis member should be tied to.
+
+Valid values: Any existing stream name or 'none'
+Default: Defined in namelist_defaults.xml
+</entry>
+
+<entry id="config_AM_thicknesses_compute_on_startup" type="logical"
+	category="AM_thicknesses" group="AM_thicknesses">
+Logical flag determining if an analysis member computation occurs on start-up.
+
+Valid values: true or false
+Default: Defined in namelist_defaults.xml
+</entry>
+
+<entry id="config_AM_thicknesses_write_on_startup" type="logical"
+	category="AM_thicknesses" group="AM_thicknesses">
+Logical flag determining if an analysis member write occurs on start-up.
+
+Valid values: true or false
+Default: Defined in namelist_defaults.xml
+</entry>
+
+
 <!-- AM_regionalStatistics -->
 
 <entry id="config_AM_regionalStatistics_enable" type="logical"
@@ -2885,6 +2976,22 @@ Default: Defined in namelist_defaults.xml
 Name of the restart stream the analysis member will use to initialize itself if restart is enabled.
 
 Valid values: A restart stream with state of the conservation check.
+Default: Defined in namelist_defaults.xml
+</entry>
+
+<entry id="config_AM_conservationCheck_carbon_failure_abort" type="logical"
+	category="AM_conservationCheck" group="AM_conservationCheck">
+If true, abort if carbon conservation fails bounds check.
+
+Valid values: true or false
+Default: Defined in namelist_defaults.xml
+</entry>
+
+<entry id="config_AM_conservationCheck_include_ocean" type="logical"
+	category="AM_conservationCheck" group="AM_conservationCheck">
+Include slab ocean in conservation calculation.
+
+Valid values: true or false
 Default: Defined in namelist_defaults.xml
 </entry>
 
