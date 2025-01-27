@@ -23,6 +23,13 @@
 			description="sea-ice fraction limit for ice extent."
 			possible_values="real value between 0 and 1"
 		/>
+                <nml_option name="config_AM_regionalStatistics_backward_output_offset"
+                                        type="character"
+                                        default_value="00-00-01_00:00:00"
+                                        units="unitless"
+                                        description="Backward offset for filename timestamps when writing the output stream"
+                                        possible_values="A time interval in YYYY-MM-DD_hh:mm:ss."
+		/>
 	</nml_record>
 	<packages>
 		<package name="regionalStatisticsAMPKG" description="This package includes variables required for the regionalStatistics analysis member."/>

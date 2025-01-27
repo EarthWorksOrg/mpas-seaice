@@ -462,6 +462,7 @@
 <config_AM_regionalStatistics_compute_on_startup>true</config_AM_regionalStatistics_compute_on_startup>
 <config_AM_regionalStatistics_write_on_startup>true</config_AM_regionalStatistics_write_on_startup>
 <config_AM_regionalStatistics_ice_extent_limit>0.15</config_AM_regionalStatistics_ice_extent_limit>
+<config_AM_regionalStatistics_backward_output_offset>'00-00-01_00:00:00'</config_AM_regionalStatistics_backward_output_offset>
 
 <!-- AM_ridgingDiagnostics -->
 <config_AM_ridgingDiagnostics_enable>true</config_AM_ridgingDiagnostics_enable>
@@ -575,7 +576,7 @@
 <config_AM_timeSeriesStatsMonthly_enable prognostic_mode="prescribed">false</config_AM_timeSeriesStatsMonthly_enable>
 <config_AM_timeSeriesStatsMonthly_compute_on_startup>false</config_AM_timeSeriesStatsMonthly_compute_on_startup>
 <config_AM_timeSeriesStatsMonthly_write_on_startup>false</config_AM_timeSeriesStatsMonthly_write_on_startup>
-<config_AM_timeSeriesStatsMonthly_compute_interval>'0000-00-00_01:00:00'</config_AM_timeSeriesStatsMonthly_compute_interval>
+<config_AM_timeSeriesStatsMonthly_compute_interval>'dt'</config_AM_timeSeriesStatsMonthly_compute_interval>
 <config_AM_timeSeriesStatsMonthly_output_stream>'timeSeriesStatsMonthlyOutput'</config_AM_timeSeriesStatsMonthly_output_stream>
 <config_AM_timeSeriesStatsMonthly_restart_stream>'none'</config_AM_timeSeriesStatsMonthly_restart_stream>
 <config_AM_timeSeriesStatsMonthly_operation>'avg'</config_AM_timeSeriesStatsMonthly_operation>
