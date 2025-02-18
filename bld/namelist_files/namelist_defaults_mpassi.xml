@@ -14,6 +14,7 @@
 <config_dt ice_grid="oQU015">240.0</config_dt>
 <config_dt ice_grid="oQU0075">120.0</config_dt>
 <config_dt ice_grid="oQU00375">60.0</config_dt>
+<config_dt ice_grid="oRR60-3WUS">60.0</config_dt>
 <config_dt ice_grid="oEC60to30v3">1800.0</config_dt>
 <config_dt ice_grid="oEC60to30v3wLI">1800.0</config_dt>
 <config_dt ice_grid="ECwISC30to60E1r2">1800.0</config_dt>
@@ -576,7 +577,7 @@
 <config_AM_timeSeriesStatsMonthly_enable prognostic_mode="prescribed">false</config_AM_timeSeriesStatsMonthly_enable>
 <config_AM_timeSeriesStatsMonthly_compute_on_startup>false</config_AM_timeSeriesStatsMonthly_compute_on_startup>
 <config_AM_timeSeriesStatsMonthly_write_on_startup>false</config_AM_timeSeriesStatsMonthly_write_on_startup>
-<config_AM_timeSeriesStatsMonthly_compute_interval>'dt'</config_AM_timeSeriesStatsMonthly_compute_interval>
+<config_AM_timeSeriesStatsMonthly_compute_interval>'0000-00-00_01:00:00'</config_AM_timeSeriesStatsMonthly_compute_interval>
 <config_AM_timeSeriesStatsMonthly_output_stream>'timeSeriesStatsMonthlyOutput'</config_AM_timeSeriesStatsMonthly_output_stream>
 <config_AM_timeSeriesStatsMonthly_restart_stream>'none'</config_AM_timeSeriesStatsMonthly_restart_stream>
 <config_AM_timeSeriesStatsMonthly_operation>'avg'</config_AM_timeSeriesStatsMonthly_operation>
