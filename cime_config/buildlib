@@ -99,7 +99,7 @@ def _copy_files_to_blddir(case):
         for filename in filenames:
             filename1 = filename.replace(glob_dir, '', 1)
             ofilename = filename1.replace('/', '', 1)
-            cmd = "sed -e '1,$s/MPASAOS/mpass/' {} > {}/{}".format(filename, dest_dir, ofilename)
+            cmd = "sed -e '1,$s/MPASAOS/mpass/g' {} > {}/{}".format(filename, dest_dir, ofilename)
             rc, out, err = run_cmd(cmd, from_dir=glob_dir)
             expect(rc == 0, "Command %s failed rc=%d\nout=%s\nerr=%s" % (cmd, rc, out, err))
         filenames = glob.glob(glob_dir + "/*.inc")
