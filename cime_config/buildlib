@@ -46,6 +46,7 @@ def _copy_files_to_blddir(case):
     glob_dirs = [os.path.join(srcroot, "components/mpas-framework", "src", "framework"),
                  os.path.join(srcroot, "components/mpas-framework", "src", "tools", "registry"),
                  os.path.join(srcroot, "components/mpas-framework", "src", "external", "ezxml"),
+                 os.path.join(srcroot, "components/mpas-framework", "src", "external", "esmfloc_time_f90"),
                  os.path.join(srcroot, "components/mpas-framework", "src", "core_seaice", "shared"),
                  os.path.join(srcroot, "components/mpas-framework", "src", "core_seaice", "analysis_members"),
                  os.path.join(srcroot, "components/mpas-framework", "src", "core_seaice", "model_forward"),
