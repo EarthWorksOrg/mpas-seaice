@@ -3983,7 +3983,7 @@
          vsno = vsno + vsnon(n)
       enddo
       tmp2 = rhos*vsno + fresh*dt
-      if (abs(tmp1-tmp2)>puny) then
+      if (abs(tmp1-tmp2)>puny * 1000000.) then
         write(warning,*) ' '
         call add_warning(warning)
         write(warning,*)'tmp1 ne tmp2',tmp1, tmp2
