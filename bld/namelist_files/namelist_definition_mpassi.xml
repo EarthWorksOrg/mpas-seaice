@@ -2877,6 +2877,14 @@ Valid values: real value between 0 and 1
 Default: Defined in namelist_defaults.xml
 </entry>
 
+<entry id="config_AM_regionalStatistics_backward_output_offset" type="char*1024"
+	category="AM_regionalStatistics" group="AM_regionalStatistics">
+Backward offset for filename timestamps when writing the output stream
+
+Valid values: A time interval in YYYY-MM-DD_hh:mm:ss.
+Default: Defined in namelist_defaults.xml
+</entry>
+
 
 <!-- AM_ridgingDiagnostics -->
 

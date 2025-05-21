@@ -39,7 +39,8 @@ module ice_comp_nuopc
   use seaice_forcing, only : post_atmospheric_coupling, post_oceanic_coupling,   &
                              seaice_forcing_get, seaice_forcing_write_restart_times
   use seaice_analysis_driver, only : seaice_analysis_precompute, seaice_analysis_compute, &
-                             seaice_analysis_restart, seaice_analysis_write
+                             seaice_analysis_restart, seaice_analysis_write,   &
+                             seaice_analysis_compute_startup
   use seaice_initialize, only : seaice_init_post_clock_advance
   use seaice_core_interface, only : seaice_setup_core, seaice_setup_domain
   use seaice_time_integration, only : seaice_timestep
@@ -379,16 +380,20 @@ contains
     character(*), parameter     :: F00   = "('(ice_comp_nuopc) ',2a,1x,d21.14)"
     character(len=*), parameter :: subname=trim(modName)//':(InitializeRealize) '
 
+    type (block_type), pointer :: block_ptr
+    type (mpas_pool_type), pointer :: statePool, &
+                                      forcingPool
+
     interface
-       subroutine xml_stream_parser(xmlname, mgr_p, comm, ierr) bind(c)
+       subroutine mpass_xml_stream_parser(xmlname, mgr_p, comm, ierr) bind(c)
           use iso_c_binding, only : c_char, c_ptr, c_int
           character(kind=c_char), dimension(*), intent(in) :: xmlname
           type (c_ptr), intent(inout) :: mgr_p
           integer(kind=c_int), intent(inout) :: comm
           integer(kind=c_int), intent(out) :: ierr
-       end subroutine xml_stream_parser
+       end subroutine mpass_xml_stream_parser
 
-       subroutine xml_stream_get_attributes(xmlname, streamname, comm, filename, ref_time, filename_interval, io_type, ierr) bind(c)
+       subroutine mpass_xml_stream_get_attributes(xmlname, streamname, comm, filename, ref_time, filename_interval, io_type, ierr) bind(c)
           use iso_c_binding, only : c_char, c_int
           character(kind=c_char), dimension(*), intent(in) :: xmlname
           character(kind=c_char), dimension(*), intent(in) :: streamname
@@ -398,12 +403,13 @@ contains
           character(kind=c_char), dimension(*), intent(out) :: filename_interval
           character(kind=c_char), dimension(*), intent(out) :: io_type
           integer(kind=c_int), intent(out) :: ierr
-       end subroutine xml_stream_get_attributes
+       end subroutine mpass_xml_stream_get_attributes
     end interface
 
     !--------------------------------
 
     rc = ESMF_SUCCESS
+    errorCode = ESMF_SUCCESS
     if (dbug > 5) call ESMF_LogWrite(subname//' called', ESMF_LOGMSG_INFO)
 
 
@@ -683,7 +689,7 @@ contains
     call mpas_f_to_c_string(domain_ptr % streams_filename, c_filename)
     call mpas_f_to_c_string(mesh_stream, c_mesh_stream)
     c_comm = domain_ptr % dminfo % comm
-    call xml_stream_get_attributes(c_filename, c_mesh_stream, c_comm, &
+    call mpass_xml_stream_get_attributes(c_filename, c_mesh_stream, c_comm, &
                                    c_mesh_filename_temp, c_ref_time_temp, &
                                    c_filename_interval_temp, c_iotype, c_ierr)
     if (c_ierr /= 0) then
@@ -760,7 +766,7 @@ contains
 
     ! Parse / read all streams configuration
     mgr_p = c_loc(domain_ptr % streamManager)
-    call xml_stream_parser(c_filename, mgr_p, c_comm, c_ierr)
+    call mpass_xml_stream_parser(c_filename, mgr_p, c_comm, c_ierr)
     if (c_ierr /= 0) then
        call mpas_log_write('xml_stream_parser failed.', MPAS_LOG_CRIT)
     end if
@@ -817,23 +823,23 @@ contains
 !    !DD there hase to be a better way to go from esmf type to MPAS_Time_Type
     call ESMF_TimeGet(Ecurrtime, s_i8=s_e, sn_i8=sn_e, sd_i8=sd_e, yy=yy_e, calendar = ecalendar, rc=rc)
     if (ChkErr(rc,__LINE__,u_FILE_u)) return
-    !currtime%t%basetime%S  = s_e
-    !currtime%t%basetime%Sn = sn_e
-    !currtime%t%basetime%Sd = sd_e
-    !currtime%t%yr = yy_e
-    currtime%t = EcurrTime
 
-!    call ESMF_CalendarGet(Ecalendar, calkindflag=type_e, rc=rc)
-!    if (ChkErr(rc,__LINE__,u_FILE_u)) return
+    currtime%t%basetime%S  = s_e
+    currtime%t%basetime%Sn = sn_e
+    currtime%t%basetime%Sd = sd_e
+    currtime%t%yr = yy_e
 
-!    if(type_e == ESMF_CALKIND_NOLEAP) then
-!       currTime%t%calendar => noleapCal
-!    elseif(type_e == ESMF_CALKIND_GREGORIAN) then
-!       currTime%t%calendar => gregorianCal
-!    else
-!       rc = 1
-!       if (ChkErr(rc,__LINE__,u_FILE_u)) return
-!    endif
+    call ESMF_CalendarGet(Ecalendar, calkindflag=type_e, rc=rc)
+    if (ChkErr(rc,__LINE__,u_FILE_u)) return
+
+    if(type_e == ESMF_CALKIND_NOLEAP) then
+       currTime%t%calendar => noleapCal
+    elseif(type_e == ESMF_CALKIND_GREGORIAN) then
+       currTime%t%calendar => gregorianCal
+    else
+       rc = 1
+       if (ChkErr(rc,__LINE__,u_FILE_u)) return
+    endif
 
     if (runtype == 'initial') then
        call mpas_set_clock_time(domain_ptr % clock, currTime, MPAS_START_TIME, ierr)
@@ -988,6 +994,51 @@ contains
     call ice_export (exportState, flds_scalar_name, domain_ptr,    &
                      errorCode, rc)
     if (ChkErr(rc,__LINE__,u_FILE_u)) return
+
+    if (errorCode /= 0) then
+       call mpas_log_write('ERROR in ice_export', MPAS_LOG_CRIT)
+    endif
+
+!    ! Setup clock for initial runs
+!    if (runtype == "continue" .or. runtype == "branch" ) then
+!       block_ptr => domain_ptr % blocklist
+!       do while(associated(block_ptr))
+!          call mpas_pool_get_subpool(block_ptr % structs, 'state', statePool)
+!          call mpas_pool_get_subpool(block_ptr % structs, 'forcing', forcingPool)
+!
+!          call ice_time_average_coupled_init(forcingPool)
+!          call ice_time_average_coupled_accumulate(statePool, forcingPool, 1)
+!          block_ptr => block_ptr % next
+!       end do
+!    end if
+
+!-----------------------------------------------------------------------
+!
+!   get initial state from driver
+!
+!-----------------------------------------------------------------------
+
+    !timeStep = mpas_get_clock_timestep(domain_ptr % clock, ierr=ierr)
+    call ESMF_ClockGet(clock, timeStep=timeStep, rc=rc)
+    if (ChkErr(rc,__LINE__,u_FILE_u)) return
+    !call mpas_get_timeInterval(timeStep, dt=dt)
+    call ESMF_TimeIntervalGet( timeStep, s=ice_cpl_dt, rc=rc )
+    if (ChkErr(rc,__LINE__,u_FILE_u)) return
+
+    call ice_import(importState, flds_scalar_name, domain_ptr,  &
+                       errorCode, rc)
+    if (errorCode /= 0) then
+       call mpas_log_write('Error in ice_import', MPAS_LOG_CRIT)
+    endif
+
+    itimestep = 0
+
+    call seaice_analysis_compute_startup(domain_ptr, ierr)
+
+    ! Reset all output alarms, to prevent intial time step from writing any output, unless it's ringing.
+    call mpas_stream_mgr_reset_alarms(domain_ptr % streamManager, direction=MPAS_STREAM_OUTPUT, ierr=ierr)
+    call mpas_stream_mgr_reset_alarms(domain_ptr % streamManager, direction=MPAS_STREAM_INPUT, ierr=ierr)
+
 
     !DDcall State_SetScalar(dble(nx_global), flds_scalar_index_nx, exportState, &
     !DD     flds_scalar_name, flds_scalar_num, rc)

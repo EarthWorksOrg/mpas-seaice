@@ -527,6 +527,7 @@ add_default($nl, 'config_AM_regionalStatistics_output_stream');
 add_default($nl, 'config_AM_regionalStatistics_compute_on_startup');
 add_default($nl, 'config_AM_regionalStatistics_write_on_startup');
 add_default($nl, 'config_AM_regionalStatistics_ice_extent_limit');
+add_default($nl, 'config_AM_regionalStatistics_backward_output_offset');
 
 #########################################
 # Namelist group: AM_ridgingDiagnostics #

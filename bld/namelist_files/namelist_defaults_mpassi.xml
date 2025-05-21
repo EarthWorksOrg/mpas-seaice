@@ -14,6 +14,7 @@
 <config_dt ice_grid="oQU015">240.0</config_dt>
 <config_dt ice_grid="oQU0075">120.0</config_dt>
 <config_dt ice_grid="oQU00375">60.0</config_dt>
+<config_dt ice_grid="oRR60-3WUS">60.0</config_dt>
 <config_dt ice_grid="oEC60to30v3">1800.0</config_dt>
 <config_dt ice_grid="oEC60to30v3wLI">1800.0</config_dt>
 <config_dt ice_grid="ECwISC30to60E1r2">1800.0</config_dt>
@@ -462,6 +463,7 @@
 <config_AM_regionalStatistics_compute_on_startup>true</config_AM_regionalStatistics_compute_on_startup>
 <config_AM_regionalStatistics_write_on_startup>true</config_AM_regionalStatistics_write_on_startup>
 <config_AM_regionalStatistics_ice_extent_limit>0.15</config_AM_regionalStatistics_ice_extent_limit>
+<config_AM_regionalStatistics_backward_output_offset>'00-00-01_00:00:00'</config_AM_regionalStatistics_backward_output_offset>
 
 <!-- AM_ridgingDiagnostics -->
 <config_AM_ridgingDiagnostics_enable>true</config_AM_ridgingDiagnostics_enable>
