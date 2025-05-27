@@ -149,9 +149,9 @@ def buildnml(case, caseroot, compname):
             logger.warning("         But no file available for this grid.")
 
     elif ice_grid == 'oQU030':
-        decomp_date = '230907'
+        decomp_date = '241221'
         decomp_prefix = 'mpas-o.graph.info.QU030.'
-        grid_date = '230907'
+        grid_date = '241221'
         grid_prefix = 'ocean.QU.030km'
         if ice_ic_mode == 'spunup':
             logger.warning("WARNING: The specified compset is requesting seaice ICs spunup from a G-case")
