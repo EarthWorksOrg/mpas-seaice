@@ -111,11 +111,10 @@ def buildnml(case, caseroot, compname):
             logger.warning("         But no file available for this grid.")
 
     elif ice_grid == 'oQU480':
-        decomp_date = '220131'
-        decomp_prefix = 'culled.graph.info.'
-        grid_date = '220131'
+        decomp_date = '250721'
+        decomp_prefix = 'mpas-o.graph.info.QU480.'
+        grid_date = '250721'
         grid_prefix = 'ocean.QU.480km'
-        din_loc_tem = '/glade/p/univ/ucsu0085/inputdata'
         if ice_ic_mode == 'spunup':
             logger.warning("WARNING: The specified compset is requesting seaice ICs spunup from a G-case")
             logger.warning("         But no file available for this grid.")
@@ -125,7 +124,6 @@ def buildnml(case, caseroot, compname):
         decomp_prefix = 'culled.graph.info.'
         grid_date = '220131'
         grid_prefix = 'ocean.QU.240km'
-        din_loc_tem = '/glade/p/univ/ucsu0085/inputdata'
         if ice_ic_mode == 'spunup':
             logger.warning("WARNING: The specified compset is requesting seaice ICs spunup from a G-case")
             logger.warning("         But no file available for this grid.")
@@ -140,9 +138,9 @@ def buildnml(case, caseroot, compname):
             logger.warning("         But no file available for this grid.")
 
     elif ice_grid == 'oQU060':
-        decomp_date = '230907'
+        decomp_date = '241221'
         decomp_prefix = 'mpas-o.graph.info.QU060.'
-        grid_date = '230907'
+        grid_date = '241221'
         grid_prefix = 'ocean.QU.060km'
         if ice_ic_mode == 'spunup':
             logger.warning("WARNING: The specified compset is requesting seaice ICs spunup from a G-case")
