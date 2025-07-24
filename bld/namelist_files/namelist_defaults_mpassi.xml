@@ -10,8 +10,8 @@
 <config_dt ice_grid="oQU120">1800.0</config_dt>
 <config_dt ice_grid="oQU060">1800.0</config_dt>
 <config_dt ice_grid="oQU030">900.0</config_dt>
-<config_dt ice_grid="oQU015">900.0</config_dt>
-<config_dt ice_grid="oQU0075">900.0</config_dt>
+<config_dt ice_grid="oQU015">450.0</config_dt>
+<config_dt ice_grid="oQU0075">225.0</config_dt>
 <config_dt ice_grid="oQU00375">120.0</config_dt>
 <config_dt ice_grid="oRR60-3WUS">120.0</config_dt>
 <config_dt ice_grid="oEC60to30v3">1800.0</config_dt>
