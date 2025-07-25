@@ -326,10 +326,10 @@ def buildnml(case, caseroot, compname):
     # Note: this is not setup for multiple instances
     #--------------------------------------------------------------------
 
-    input_file = "{}/ice/mpas-cice/{}/{}.{}.nc".format(din_loc_root, ice_mask, grid_prefix, grid_date)
-    snow_data = "{}/ice/mpas-cice/snicar_drdt_bst_fit_60_c04262019.nc".format(din_loc_root)
-    snicar_data = "{}/ice/mpas-cice/snicar_optics_5bnd_snow_and_aerosols.nc".format(din_loc_root)
-    snicar_data2 = "{}/ice/mpas-cice/snicar_optics_5bnd_mam_c140303_mpas_cice.nc".format(din_loc_root)
+    input_file = "{}/ocn/mpas-o/{}/{}.{}.nc".format(din_loc_root, ice_mask, grid_prefix, grid_date)
+    snow_data = "{}/ice/mpas-cice/general/snicar_drdt_bst_fit_60_c04262019.nc".format(din_loc_root)
+    snicar_data = "{}/ice/mpas-cice/general/snicar_optics_5bnd_snow_and_aerosols.nc".format(din_loc_root)
+    snicar_data2 = "{}/ice/mpas-cice/general/snicar_optics_5bnd_mam_c140303_mpas_cice.nc".format(din_loc_root)
     if run_type == 'hybrid' or run_type == 'branch':
         input_file = "{}/{}.mpassi.rst.{}_{}.nc".format(rundir, run_refcase, run_refdate, run_reftod)
         expect(os.path.exists(input_file), " ERROR mpassi buildnml: missing specified restart file for branch or hybrid run: {}".format(input_file))
