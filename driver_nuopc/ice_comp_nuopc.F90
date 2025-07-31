@@ -379,6 +379,8 @@ contains
     real (kind=RKIND), pointer :: tempRealConfig
     character(*), parameter     :: F00   = "('(ice_comp_nuopc) ',2a,1x,d21.14)"
     character(len=*), parameter :: subname=trim(modName)//':(InitializeRealize) '
+    integer, save :: domainID = 0
+
 
     type (block_type), pointer :: block_ptr
     type (mpas_pool_type), pointer :: statePool, &
@@ -490,6 +492,9 @@ contains
 
     ! Write to iceLogUnit here, because the log module is not open yet.
     if (iam==0) write(iceLogUnit,'(a,i6)') '=== Beginning ice_init_nuopc: rank=',iam
+
+    domain_ptr % domainID = domainID
+    domainID = domainID + 1
 
     call mpas_framework_init_phase1(domain_ptr % dminfo, lmpicom)
  
